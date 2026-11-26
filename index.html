@@ -1,0 +1,2027 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>예비군 D-day</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="예비군 D-day">
+<meta name="format-detection" content="telephone=no">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%230A7CFF'/%3E%3Cpath d='M18 33l9 9 19-20' fill='none' stroke='%23fff' stroke-width='7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#F2F2F7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0B0B0D" media="(prefers-color-scheme: dark)">
+<style>
+:root{
+  --bg:#F2F2F7;
+  --card:#FFFFFF;
+  --card-2:#FBFBFD;
+  --text:#101014;
+  --text2:#63636B;
+  --text3:#9A9AA2;
+  --line:rgba(60,60,67,0.11);
+  --line-strong:rgba(60,60,67,0.18);
+  --accent:#0A7CFF;
+  --accent-2:#3E9BFF;
+  --accent-weak:rgba(10,124,255,0.10);
+  --accent-weak-2:rgba(10,124,255,0.18);
+  --danger:#FF3B30;
+  --danger-weak:rgba(255,59,48,0.10);
+  --warn:#F08C00;
+  --warn-weak:rgba(240,140,0,0.12);
+  --ok:#2FBF5E;
+  --nav-bg:rgba(242,242,247,0.82);
+  --shadow:0 1px 2px rgba(16,16,20,0.04), 0 8px 24px rgba(16,16,20,0.06);
+  --radius:18px;
+  --tab-h:56px;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#000000;
+    --card:#1B1B1E;
+    --card-2:#232327;
+    --text:#F2F2F7;
+    --text2:#A6A6AE;
+    --text3:#71717A;
+    --line:rgba(255,255,255,0.10);
+    --line-strong:rgba(255,255,255,0.18);
+    --accent:#3E9BFF;
+    --accent-2:#4FA5FF;
+    --accent-weak:rgba(62,155,255,0.14);
+    --accent-weak-2:rgba(62,155,255,0.24);
+    --danger:#FF6B61;
+    --danger-weak:rgba(255,107,97,0.14);
+    --warn:#FFB340;
+    --warn-weak:rgba(255,179,64,0.15);
+    --ok:#4BD97C;
+    --nav-bg:rgba(0,0,0,0.72);
+    --shadow:0 1px 2px rgba(0,0,0,0.5), 0 8px 24px rgba(0,0,0,0.4);
+  }
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:'Pretendard','Pretendard Variable',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif;
+  font-size:15px;line-height:1.45;letter-spacing:-0.01em;
+  -webkit-font-smoothing:antialiased;
+  padding-bottom:calc(var(--tab-h) + env(safe-area-inset-bottom) + 18px);
+  overscroll-behavior-y:none;
+}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;cursor:pointer;text-align:inherit}
+input,select,textarea{font:inherit;color:inherit}
+h1,h2,h3,p,ul{margin:0}
+ul{padding:0;list-style:none}
+.hidden{display:none !important}
+
+/* ---------- 상단 내비 ---------- */
+.nav{
+  position:sticky;top:0;z-index:30;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:calc(env(safe-area-inset-top) + 8px) 18px 8px;
+  background:var(--nav-bg);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);
+  backdrop-filter:saturate(180%) blur(20px);
+  border-bottom:1px solid transparent;
+  transition:border-color .2s ease;
+}
+.nav.scrolled{border-bottom-color:var(--line)}
+.nav-left{display:flex;flex-direction:column;gap:1px;min-width:0}
+.nav-title{font-size:13px;font-weight:700;color:var(--text2);letter-spacing:0}
+.nav-sub{font-size:11px;color:var(--text3);font-weight:500}
+.nav-btn{
+  width:36px;height:36px;border-radius:50%;display:grid;place-items:center;
+  background:var(--card);color:var(--text2);box-shadow:var(--shadow);
+}
+.nav-btn:active{transform:scale(.94)}
+.nav-btn svg{width:19px;height:19px}
+
+/* ---------- 공통 ---------- */
+.view{padding:8px 16px 8px}
+.h1{font-size:27px;font-weight:800;letter-spacing:-0.035em;margin:8px 2px 2px}
+.h1-sub{font-size:13px;color:var(--text3);margin:0 2px 14px;font-weight:500}
+.section{margin-top:22px}
+.section-head{display:flex;align-items:baseline;gap:7px;margin:0 4px 9px}
+.section-title{font-size:14px;font-weight:800;letter-spacing:-0.02em}
+.section-count{font-size:13px;font-weight:700;color:var(--text3)}
+.section-count.hot{color:var(--danger)}
+.card{
+  background:var(--card);border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+.card + .card{margin-top:10px}
+.pad{padding:16px}
+.muted{color:var(--text2)}
+.tiny{font-size:12px;color:var(--text3);font-weight:500}
+.chip{
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:11px;font-weight:700;letter-spacing:-0.01em;
+  padding:3px 8px;border-radius:7px;
+  background:var(--accent-weak);color:var(--accent);
+}
+.chip.gray{background:var(--line);color:var(--text2)}
+.chip.warn{background:var(--warn-weak);color:var(--warn)}
+.chip.danger{background:var(--danger-weak);color:var(--danger)}
+.progress{height:5px;border-radius:99px;background:var(--line);overflow:hidden}
+.progress > i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--accent-2),var(--accent));transition:width .3s ease}
+
+/* ---------- 날짜 이동 ---------- */
+.datebar{
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  background:var(--card);border-radius:16px;box-shadow:var(--shadow);
+  padding:6px;margin-top:4px;
+}
+.datebar button.arrow{
+  width:42px;height:42px;border-radius:12px;display:grid;place-items:center;color:var(--text2);
+}
+.datebar button.arrow:active{background:var(--line)}
+.datebar .center{position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;flex:1;padding:4px 0;border-radius:12px}
+.datebar .date-input{position:absolute;inset:0;width:100%;height:100%;opacity:0;border:0;padding:0;margin:0;appearance:none;-webkit-appearance:none;background:transparent}
+.backtoday{display:block;margin:8px auto 0;font-size:12.5px;font-weight:800;color:var(--accent);padding:6px 12px;border-radius:10px;background:var(--accent-weak)}
+.datebar .d-label{font-size:16px;font-weight:800;letter-spacing:-0.02em}
+.datebar .d-badge{
+  font-size:10.5px;font-weight:800;color:var(--accent);background:var(--accent-weak);
+  padding:1px 7px;border-radius:6px;letter-spacing:0;
+}
+.datebar .d-badge.preview{color:var(--warn);background:var(--warn-weak)}
+.datebar .d-badge.hide{visibility:hidden}
+
+/* ---------- 히어로(훈련 요약) ---------- */
+.hero{
+  border-radius:20px;padding:16px;
+  background:linear-gradient(155deg,var(--accent-weak-2),var(--accent-weak) 55%, transparent);
+  border:1px solid var(--accent-weak-2);
+  margin-top:12px;
+  display:block;width:100%;text-align:left;transition:transform .12s ease;
+}
+.hero:active{transform:scale(.985)}
+.hero + .hero{margin-top:8px}
+.hero-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.hero-name{font-size:17px;font-weight:800;letter-spacing:-0.03em;margin-top:8px}
+.hero-dates{font-size:12.5px;color:var(--text2);font-weight:600;margin-top:3px}
+.hero-dday{font-size:26px;font-weight:900;letter-spacing:-0.04em;color:var(--accent);font-variant-numeric:tabular-nums}
+.hero-dday.small{font-size:19px}
+.hero-dday.after{color:var(--text3)}
+.hero-dday.during{color:var(--warn)}
+.hero-bottom{display:flex;align-items:center;gap:10px;margin-top:12px}
+.hero-bottom .progress{flex:1}
+.hero-prog{font-size:11.5px;font-weight:700;color:var(--text2);white-space:nowrap}
+
+/* ---------- 할 일 행 ---------- */
+.list{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+.task{display:flex;align-items:flex-start;gap:12px;padding:13px 14px;position:relative}
+.task + .task{border-top:1px solid var(--line)}
+.detail + .task{border-top:1px solid var(--line)}
+.task:active{background:var(--card-2)}
+.check{
+  flex:0 0 auto;width:25px;height:25px;border-radius:50%;
+  border:1.8px solid var(--line-strong);display:grid;place-items:center;
+  margin-top:1px;transition:all .15s ease;background:transparent;
+}
+.check svg{width:14px;height:14px;opacity:0;transform:scale(.6);transition:all .15s ease;color:#fff}
+.check.on{background:var(--accent);border-color:var(--accent)}
+.check.on svg{opacity:1;transform:scale(1)}
+.task-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.task-title{font-size:14.5px;font-weight:700;letter-spacing:-0.02em;word-break:keep-all}
+.task.done .task-title{color:var(--text3);text-decoration:line-through;text-decoration-thickness:1.5px}
+.task-meta{font-size:11.5px;color:var(--text3);font-weight:600;display:flex;flex-wrap:wrap;gap:5px;align-items:center}
+.task-meta .late{color:var(--danger)}
+.task-meta .soon{color:var(--warn)}
+.task-meta .sep{opacity:.45}
+.chev{flex:0 0 auto;color:var(--text3);font-size:15px;margin-top:2px;transition:transform .18s ease}
+.task.open .chev{transform:rotate(90deg)}
+.detail{
+  margin:0 14px 13px 51px;padding:12px 13px;
+  background:var(--card-2);border:1px solid var(--line);border-radius:12px;
+  animation:drop .18s ease;
+}
+@keyframes drop{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.detail .path{display:flex;flex-direction:column;gap:2px;font-size:12px;color:var(--text2);margin-bottom:9px}
+.detail .path b{font-size:10.5px;font-weight:800;color:var(--accent);letter-spacing:.02em}
+.steps{counter-reset:s;display:flex;flex-direction:column;gap:6px}
+.steps li{
+  font-size:12.5px;color:var(--text2);line-height:1.42;padding-left:20px;position:relative;
+}
+.steps li::before{
+  counter-increment:s;content:counter(s);
+  position:absolute;left:0;top:1px;width:15px;height:15px;border-radius:5px;
+  background:var(--accent-weak);color:var(--accent);font-size:9.5px;font-weight:800;
+  display:grid;place-items:center;
+}
+.detail .note{font-size:11.5px;color:var(--text3);margin-top:9px;padding-top:9px;border-top:1px dashed var(--line)}
+.detail .note + .note{margin-top:6px;padding-top:0;border-top:0}
+
+/* ---------- 빈 상태 ---------- */
+.empty{
+  text-align:center;padding:26px 22px;color:var(--text3);
+}
+.empty .em-title{font-size:14px;font-weight:700;color:var(--text2);margin-bottom:4px}
+.empty .em-sub{font-size:12.5px;line-height:1.5}
+.empty-mini{font-size:12.5px;color:var(--text3);padding:14px 4px 2px}
+
+/* ---------- 버튼 ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  height:44px;padding:0 18px;border-radius:13px;font-size:14.5px;font-weight:700;
+  background:var(--card-2);color:var(--text);border:1px solid var(--line);
+  transition:transform .12s ease, opacity .12s ease;
+}
+.btn:active{transform:scale(.97);opacity:.85}
+.btn.primary{background:var(--accent);color:#fff;border-color:transparent}
+.btn.danger{background:var(--danger-weak);color:var(--danger);border-color:transparent}
+.btn.small{height:36px;padding:0 13px;font-size:13px;border-radius:10px}
+.btn.block{width:100%}
+.btn.ghost{background:transparent;border-color:var(--line-strong)}
+.btn svg{width:16px;height:16px}
+
+/* ---------- 훈련 카드 ---------- */
+.tcard{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px;margin-bottom:10px}
+.tcard-top{display:flex;align-items:flex-start;gap:12px}
+.tcard-main{flex:1;min-width:0}
+.tcard-name{font-size:16.5px;font-weight:800;letter-spacing:-0.03em;margin-top:6px;word-break:keep-all}
+.tcard-dates{font-size:12.5px;color:var(--text2);font-weight:600;margin-top:3px}
+.tcard-sub{font-size:11.5px;color:var(--text3);font-weight:600;margin-top:2px}
+.dday-box{
+  flex:0 0 auto;min-width:64px;text-align:center;padding:6px 8px;border-radius:12px;
+  background:var(--accent-weak);color:var(--accent);
+}
+.dday-box .n{font-size:19px;font-weight:900;letter-spacing:-0.04em;font-variant-numeric:tabular-nums;line-height:1.1}
+.dday-box .t{font-size:9.5px;font-weight:800;opacity:.8;letter-spacing:.04em}
+.dday-box.after{background:var(--line);color:var(--text3)}
+.dday-box.during{background:var(--warn-weak);color:var(--warn)}
+.tcard-bar{display:flex;align-items:center;gap:9px;margin-top:13px}
+.tcard-bar .progress{flex:1}
+.tcard-actions{display:flex;gap:8px;margin-top:14px}
+.tcard-actions .btn{flex:1}
+.tcard-body{margin-top:14px;border-top:1px solid var(--line);padding-top:4px}
+.phase-head{
+  font-size:11px;font-weight:800;color:var(--text3);letter-spacing:.02em;
+  margin:14px 2px 6px;display:flex;align-items:center;gap:6px;
+}
+.phase-head::after{content:'';flex:1;height:1px;background:var(--line)}
+.phase-head .ph-count{color:var(--text3);font-weight:700}
+.tinytask{display:flex;gap:10px;align-items:flex-start;padding:8px 0}
+.tinytask + .tinytask{border-top:1px solid var(--line)}
+.tinytask .check{width:21px;height:21px}
+.tinytask .check svg{width:12px;height:12px}
+.tinytask .ti-main{flex:1;min-width:0}
+.tinytask .ti-title{font-size:13.5px;font-weight:650;letter-spacing:-0.02em}
+.tinytask.done .ti-title{color:var(--text3);text-decoration:line-through}
+.tinytask .ti-date{font-size:11px;color:var(--text3);font-weight:600;margin-top:1px}
+.tinytask .ti-date.late{color:var(--danger)}
+
+/* ---------- 상시 업무 ---------- */
+.rcard{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:15px 16px;margin-bottom:10px}
+.rcard-head{display:flex;align-items:flex-start;gap:12px}
+.rcard-title{font-size:15px;font-weight:800;letter-spacing:-0.025em}
+.rcard-sched{font-size:12px;color:var(--text2);font-weight:600;margin-top:2px}
+.rcard-occ{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+.occ{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:7px 11px 7px 9px;border-radius:11px;background:var(--card-2);
+  border:1px solid var(--line);font-size:12.5px;font-weight:700;color:var(--text2);
+}
+.occ .check{width:20px;height:20px;margin:0}
+.occ .check svg{width:12px;height:12px}
+.occ.on{background:var(--accent-weak);border-color:transparent;color:var(--accent)}
+.occ.late{border-color:var(--danger-weak);color:var(--danger);background:var(--danger-weak)}
+.rcard-next{font-size:12px;color:var(--text3);font-weight:600;margin-top:11px}
+.rcard-detail{margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}
+
+/* ---------- 설정/시트 ---------- */
+#sheetLayer{position:fixed;inset:0;z-index:100;pointer-events:none}
+#sheetLayer.on{pointer-events:auto}
+.backdrop{
+  position:absolute;inset:0;background:rgba(0,0,0,.38);
+  opacity:0;transition:opacity .22s ease;
+}
+#sheetLayer.on .backdrop{opacity:1}
+.sheet{
+  position:absolute;left:0;right:0;bottom:0;max-height:92%;
+  background:var(--bg);border-radius:22px 22px 0 0;
+  display:flex;flex-direction:column;
+  transform:translateY(102%);transition:transform .28s cubic-bezier(.32,.72,0,1);
+  box-shadow:0 -10px 40px rgba(0,0,0,.18);
+  padding-bottom:env(safe-area-inset-bottom);
+}
+#sheetLayer.on .sheet{transform:translateY(0)}
+.sheet-grab{width:38px;height:5px;border-radius:99px;background:var(--line-strong);margin:9px auto 2px;flex:0 0 auto}
+.sheet-head{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:8px 20px 10px;flex:0 0 auto;
+}
+.sheet-head h2{font-size:18px;font-weight:800;letter-spacing:-0.03em}
+.sheet-body{padding:2px 16px 18px;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+.sheet-foot{
+  padding:10px 16px 16px;display:flex;gap:9px;flex:0 0 auto;
+  background:var(--bg);border-top:1px solid var(--line);
+}
+.sheet-foot .btn{flex:1}
+.field{margin-bottom:14px}
+.field > label{display:block;font-size:12px;font-weight:800;color:var(--text2);margin:0 2px 6px}
+.input{
+  width:100%;height:46px;padding:0 14px;border-radius:12px;
+  background:var(--card);border:1px solid var(--line);font-size:16px;font-weight:600;
+  letter-spacing:-0.01em;outline:none;appearance:none;
+}
+.input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-weak)}
+textarea.input{height:auto;min-height:92px;padding:12px 14px;line-height:1.5;font-size:14px;resize:vertical}
+select.input{
+  background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%238E8E93' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 14px center;padding-right:38px;
+}
+.row2{display:flex;gap:10px}
+.row2 > .field{flex:1;min-width:0}
+.switch-row{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  padding:13px 14px;background:var(--card);border-radius:12px;border:1px solid var(--line);
+  margin-bottom:10px;
+}
+.switch-row .sw-text{flex:1;min-width:0}
+.switch-row .sw-title{font-size:13.5px;font-weight:700;letter-spacing:-0.02em}
+.switch-row .sw-sub{font-size:11.5px;color:var(--text3);margin-top:2px;line-height:1.35}
+.switch{position:relative;flex:0 0 auto;width:50px;height:30px;border-radius:99px;background:var(--line-strong);transition:background .18s ease}
+.switch::after{content:'';position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform .18s ease}
+.switch.on{background:var(--accent)}
+.switch.on::after{transform:translateX(20px)}
+.help{font-size:11.5px;color:var(--text3);margin:7px 3px 0;line-height:1.45}
+.group-title{font-size:12px;font-weight:800;color:var(--text3);margin:20px 3px 8px;letter-spacing:.01em}
+.group-title:first-child{margin-top:4px}
+.listcard{background:var(--card);border-radius:14px;border:1px solid var(--line);overflow:hidden}
+.listrow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 14px}
+.listrow + .listrow{border-top:1px solid var(--line)}
+.listrow .lr-title{font-size:13.5px;font-weight:700}
+.listrow .lr-sub{font-size:11.5px;color:var(--text3);margin-top:2px}
+.mini-btn{font-size:12.5px;font-weight:800;color:var(--accent);padding:6px 2px;white-space:nowrap}
+.mini-btn.danger{color:var(--danger)}
+.holi-add{display:flex;gap:8px;margin-top:10px}
+.holi-add .input{height:44px;flex:1}
+.holi-add .btn{height:44px;flex:0 0 auto;padding:0 16px}
+
+
+/* ---------- 지침 검색 ---------- */
+.qa-box{
+  display:flex;align-items:center;gap:9px;margin-top:4px;
+  background:var(--card);border:1px solid var(--line);border-radius:14px;
+  padding:0 12px;height:50px;box-shadow:var(--shadow);
+}
+.qa-box > svg{width:19px;height:19px;color:var(--text3);flex:0 0 auto;stroke-width:2}
+.qa-input{
+  flex:1;min-width:0;border:0;background:transparent;outline:none;
+  height:48px;font-size:16px;font-weight:600;letter-spacing:-0.01em;
+}
+.qa-input::placeholder{color:var(--text3);font-weight:500}
+.qa-clear{font-size:12px;font-weight:800;color:var(--accent);padding:8px 2px;flex:0 0 auto}
+.qa-chips{display:flex;flex-wrap:wrap;gap:7px;margin:12px 1px 2px}
+.qa-chip{
+  font-size:12px;font-weight:700;color:var(--text2);
+  background:var(--card);border:1px solid var(--line);
+  padding:7px 11px;border-radius:99px;letter-spacing:-0.01em;
+}
+.qa-chip:active{background:var(--accent-weak);color:var(--accent);border-color:transparent}
+.qa-chip.on{background:var(--accent);color:#fff;border-color:transparent}
+.qa-hint{font-size:12.5px;color:var(--text3);margin:16px 4px 2px;line-height:1.55}
+.qa-count{font-size:11.5px;font-weight:700;color:var(--text3);margin:16px 4px 9px}
+.qa-card{
+  background:var(--card);border-radius:16px;box-shadow:var(--shadow);
+  padding:15px 16px;margin-bottom:10px;
+}
+.qa-group{font-size:10.5px;font-weight:800;color:var(--accent);letter-spacing:0.02em}
+.qa-title{font-size:16px;font-weight:800;letter-spacing:-0.03em;margin-top:3px}
+.qa-lines{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+.qa-lines li{
+  font-size:13px;color:var(--text2);line-height:1.5;
+  padding-left:11px;position:relative;letter-spacing:-0.01em;
+}
+.qa-lines li::before{
+  content:'';position:absolute;left:0;top:7px;width:4px;height:4px;border-radius:50%;
+  background:var(--accent);opacity:.5;
+}
+.qa-path{
+  margin-top:12px;padding:9px 11px;border-radius:10px;background:var(--card-2);
+  display:flex;flex-direction:column;gap:2px;font-size:11.5px;color:var(--text2);line-height:1.4;
+}
+.qa-path b,.qa-ex b{font-size:10px;font-weight:800;color:var(--accent);letter-spacing:0.02em}
+.qa-ex{margin-top:11px;font-size:12px;color:var(--text2);line-height:1.45}
+.qa-ex ul{margin-top:5px}
+.qa-ex li{padding-left:10px;position:relative;margin-top:3px}
+.qa-ex li::before{content:'·';position:absolute;left:0;color:var(--text3)}
+.qa-index-row{
+  width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:13px 2px;font-size:13.5px;font-weight:700;letter-spacing:-0.02em;
+  border-bottom:1px solid var(--line);text-align:left;
+}
+.qa-index-row:last-child{border-bottom:0}
+.qa-index-row .cnt{font-size:11.5px;font-weight:700;color:var(--text3);white-space:nowrap}
+.qa-index-row:active{color:var(--accent)}
+
+/* ---------- 탭바 ---------- */
+.tabbar{
+  position:fixed;left:0;right:0;bottom:0;z-index:40;
+  display:flex;padding-bottom:env(safe-area-inset-bottom);
+  background:var(--nav-bg);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);
+  backdrop-filter:saturate(180%) blur(20px);
+  border-top:1px solid var(--line);
+}
+.tab{
+  flex:1;height:var(--tab-h);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+  color:var(--text3);font-size:10px;font-weight:700;letter-spacing:-0.01em;
+  transition:color .15s ease;
+}
+.tab svg{width:23px;height:23px;stroke-width:1.9}
+.tab.active{color:var(--accent)}
+.tab .badge{
+  position:absolute;transform:translate(15px,-9px);
+  min-width:16px;height:16px;padding:0 4px;border-radius:99px;
+  background:var(--danger);color:#fff;font-size:10px;font-weight:800;
+  display:grid;place-items:center;
+}
+.tab-wrap{position:relative;display:flex;flex-direction:column;align-items:center}
+
+/* ---------- 토스트 ---------- */
+#toast{
+  position:fixed;left:50%;bottom:calc(var(--tab-h) + env(safe-area-inset-bottom) + 22px);
+  transform:translate(-50%,14px);z-index:200;
+  background:rgba(28,28,32,.94);color:#fff;font-size:13px;font-weight:600;
+  padding:11px 18px;border-radius:14px;opacity:0;pointer-events:none;
+  transition:opacity .2s ease, transform .2s ease;max-width:86vw;text-align:center;
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation:none !important;transition:none !important}
+}
+</style>
+</head>
+<body>
+<header class="nav" id="nav">
+  <div class="nav-left">
+    <span class="nav-title">예비군 D-day</span>
+    <span class="nav-sub" id="navSub">우리 동대 상근예비역</span>
+  </div>
+  <button class="nav-btn" data-act="open-settings" aria-label="설정">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.1"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+  </button>
+</header>
+
+<main class="view" id="view"></main>
+
+<nav class="tabbar" id="tabbar"></nav>
+<div id="sheetLayer"></div>
+<div id="toast"></div>
+
+<script>
+/* =====================================================================
+   상근예비역 훈련 D-day · 단일 파일 웹앱
+   지침서 기반 자동 할 일 생성 + 상시 업무 체크 + 지침 검색
+   데이터: localStorage. 외부 요청 없음(완전 오프라인).
+   ===================================================================== */
+
+/*==LOGIC-START==*/
+var DAY_MS = 86400000;
+var WD = ['일','월','화','수','목','금','토'];
+var PHASES = ['편성 직후', 'D-15 ~ D-8', 'D-7 ~ D-3', 'D-3 ~ D-2', 'D-1', 'D-Day', '종료 후'];
+
+function pad2(n){ return (n < 10 ? '0' : '') + n; }
+function parseYMD(s){
+  var p = String(s || '').split('-').map(Number);
+  return new Date(p[0], (p[1] || 1) - 1, p[2] || 1);
+}
+function ymd(d){ return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate()); }
+function todayStr(){ return ymd(new Date()); }
+function addDays(s, n){ var d = parseYMD(s); d.setDate(d.getDate() + n); return ymd(d); }
+function diffDays(a, b){ return Math.round((parseYMD(b).getTime() - parseYMD(a).getTime()) / DAY_MS); }
+function wd(s){ return parseYMD(s).getDay(); }
+function mdLabel(s){ var d = parseYMD(s); return (d.getMonth() + 1) + '/' + d.getDate(); }
+function mdwLabel(s){ var d = parseYMD(s); return (d.getMonth() + 1) + '/' + d.getDate() + '(' + WD[d.getDay()] + ')'; }
+function longLabel(s){ var d = parseYMD(s); return (d.getMonth() + 1) + '월 ' + d.getDate() + '일 (' + WD[d.getDay()] + ')'; }
+function mondayOf(s){ var w = wd(s); return addDays(s, w === 0 ? -6 : 1 - w); }
+
+/* ---- 공휴일 (2026·2027 · 우주항공청 월력요항 기준) ---- */
+var BUILTIN_HOLIDAYS = {
+  '2026-01-01':'신정','2026-02-16':'설날 연휴','2026-02-17':'설날','2026-02-18':'설날 연휴',
+  '2026-03-01':'삼일절','2026-03-02':'대체공휴일','2026-05-01':'노동절','2026-05-05':'어린이날',
+  '2026-05-24':'부처님오신날','2026-05-25':'대체공휴일','2026-06-03':'지방선거일','2026-06-06':'현충일',
+  '2026-07-17':'제헌절','2026-08-15':'광복절','2026-08-17':'대체공휴일','2026-09-24':'추석 연휴',
+  '2026-09-25':'추석','2026-09-26':'추석 연휴','2026-10-03':'개천절','2026-10-05':'대체공휴일',
+  '2026-10-09':'한글날','2026-12-25':'기독탄신일',
+  '2027-01-01':'신정','2027-02-06':'설날 연휴','2027-02-07':'설날','2027-02-08':'설날 연휴',
+  '2027-02-09':'대체공휴일','2027-03-01':'삼일절','2027-05-01':'노동절','2027-05-03':'대체공휴일',
+  '2027-05-05':'어린이날','2027-05-13':'부처님오신날','2027-06-06':'현충일','2027-07-17':'제헌절',
+  '2027-07-19':'대체공휴일','2027-08-15':'광복절','2027-08-16':'대체공휴일','2027-09-14':'추석 연휴',
+  '2027-09-15':'추석','2027-09-16':'추석 연휴','2027-10-03':'개천절','2027-10-04':'대체공휴일',
+  '2027-10-09':'한글날','2027-10-11':'대체공휴일','2027-12-25':'기독탄신일','2027-12-27':'대체공휴일'
+};
+function customHoliday(st, s){
+  var list = (st && st.holidays) || [];
+  for (var i = 0; i < list.length; i++){ if (list[i].date === s) return list[i].name || '공휴일'; }
+  return null;
+}
+function isHoliday(st, s){ return !!BUILTIN_HOLIDAYS[s] || !!customHoliday(st, s); }
+function holidayName(st, s){ return BUILTIN_HOLIDAYS[s] || customHoliday(st, s) || ''; }
+function isOffDay(st, s){ var w = wd(s); return w === 0 || w === 6 || isHoliday(st, s); }
+function pullBack(st, s){
+  var d = s, n = 0;
+  while (n < 14 && isOffDay(st, d)) { d = addDays(d, -1); n++; }
+  return d;
+}
+
+/* ---- 훈련 유형 ---- */
+var TYPES = ['기본훈련', '동원2형', '전반기 작계', '후반기 작계', '기타'];
+function isJakgye(type){ return type === '전반기 작계' || type === '후반기 작계'; }
+
+/* ---- 지침서 기반 할 일 템플릿 ----
+   anchor: setup(편성일) | d(훈련 시작일) | end(훈련 종료일)
+   offset: 기준일로부터 일수, to: 기간형 할 일의 마감 오프셋
+   only: jakgye | nationwide (조건부)
+   pull: false = 주말·공휴일 당김 제외                                        */
+var TASK_DEFS = [
+  { id:'notify', phase:0, title:'전자고지 · 알림톡 발송', anchor:'setup', offset:0, pull:true,
+    meta:'소집통지서 유형 선택 · 열람 48시간',
+    path:'훈련대상자 관리 메뉴 · 소집통지서 일괄 발송',
+    steps:['유형별 소집통지서 선택 (기본훈련 / 동원2형 / 작계)',
+           '전자고지 발송 — 열람 기한 48시간으로 설정',
+           '알림톡 발송 후 대상자별 발송 결과 확인'],
+    note:'편성과 동시에 통지서가 나가므로 유형과 대상자를 먼저 확인한다.' },
+
+  { id:'weapon', phase:0, title:'무기수불대장 인쇄 · 훈련 탑재', anchor:'setup', offset:0, pull:true,
+    meta:'무기수불대장 출력 · 훈련 탑재',
+    path:'훈련대상자 관리 메뉴 · 무기수불대장',
+    steps:['무기수불대장 인쇄', '훈련 탑재', '편성 내역을 일일업무일지에 함께 기록'],
+    note:'무기수불대장은 훈련대상자 관리 메뉴의 무기수불대장에서 출력한다.' },
+
+  { id:'after5-mail', phase:0, title:'전자문서 발송결과 확인 · 홍보메일 발송', anchor:'setup', offset:5, pull:true,
+    meta:'편성 +5일',
+    path:'전자문서 발송 메뉴 · 발송결과 확인',
+    steps:['전자문서 발송결과 확인 (미발송 건 재발송)', '홍보메일 발송'] },
+
+  { id:'after5-post', phase:0, title:'1·2차 미열람자 우편통지', anchor:'setup', offset:5, pull:true,
+    meta:'우편 인쇄 · 봉투 · 후납 발송표',
+    path:'훈련대상자 관리 메뉴 · 유형별 소집통지서 (우편 인쇄)',
+    steps:['미열람 조회 후 1·2차 체크한 뒤 장축 소집일지 선택',
+           '통지서를 우편용으로 인쇄',
+           '편지봉투 인쇄 후 봉투에 부착',
+           '우체국 제출 — 우편요금 후납 발송표 첨부'],
+    note:'운송장이 찍힌 발송표를 함께 내야 후납으로 처리된다.' },
+
+  { id:'after5-third', phase:0, title:'3차 미열람자 전자고지 재발송 · 전화 안내', anchor:'setup', offset:5, pull:true,
+    meta:'전자고지 재발송 + 전화',
+    path:'훈련대상자 관리 메뉴 · 유형별 소집통지서',
+    steps:['3차 미열람자에게 전자고지 재발송',
+           '전화 안내 — "네이버 우측 상단 종 모양 눌러서 통지서 한 번만 꼭 확인해 주세요"'] },
+
+  { id:'settle', phase:1, title:'소집통지서 결산', anchor:'d', offset:-15, to:-8, pull:true,
+    meta:'D-15 ~ D-8 · D-8 마감 리마인드',
+    path:'훈련대상자 관리 메뉴 · 유형별 소집통지서',
+    steps:['전자고지·알림톡 열람률 취합', '우편 발송·도달 결과 확인',
+           '미열람자 명단을 정리해 3차 미교부 보고 준비'],
+    note:'D-8까지 결산을 끝내고, 남은 미교부 인원을 3차 보고 대상으로 넘긴다.' },
+
+  { id:'report3', phase:2, title:'3차 대상자 미교부 보고', anchor:'d', offset:-7, to:-3, pull:true,
+    meta:'D-7 ~ D-3 · 결재',
+    path:'훈련대상자 관리 메뉴 · 유형별 소집통지서 (방문용 인쇄)',
+    steps:['미교부사유서 작성', '미열람 확인서 출력', '방문용 통지서 출력', '결재 올리기'] },
+
+  { id:'bus', phase:2, title:'예비군 버스 신청 확인', anchor:'d', offset:-7, pull:true,
+    meta:'자유게시판 확인',
+    path:'소속 부대 게시판 · 자유게시판',
+    steps:['자유게시판에서 버스 신청 내역 확인', '인원·노선 확인 후 담당자에게 전달'] },
+
+  { id:'urge-all', phase:3, title:'훈련 참석 독려문자 발송 (1·2·3차 전부)', anchor:'d', offset:-3, to:-2, pull:true,
+    meta:'D-3 ~ D-2',
+    path:'훈련대상자 관리 메뉴 · 문자 발송',
+    steps:['1·2·3차 대상자 전체 선택', '참석 독려 문구 확인 후 발송', '발송 결과(실패 건) 확인'] },
+
+  { id:'defer', phase:4, title:'연기자 · 보류자 입력 / 일괄 훈련추가 확인', anchor:'d', offset:-1, pull:true,
+    meta:'훈련 하루 전 출국자만 연기자',
+    path:'전산 시스템에서 보류자·해소자 목록 조회',
+    steps:['훈련 하루 전 출국자만 연기자로 입력',
+           '전국단위 포함 일괄 훈련추가 확인',
+           '전시근로역·미해당자는 분류가 맞는지 확인'],
+    note:'출국 예정자는 연기, 국내에 있어도 불참이면 미참으로 두고, 41세 이상 등은 병침으로 미참 처리.' },
+
+  { id:'urge-again', phase:4, title:'1·2차 대상자 독려문자 한 번 더', anchor:'d', offset:-1, pull:true,
+    meta:'D-1 재발송',
+    path:'훈련대상자 관리 메뉴 · 문자 발송',
+    steps:['1·2차 대상자 선택', '참석 독려 문구로 재발송'] },
+
+  { id:'warn3', phase:4, title:'3차 대상자 고발예고 문자 발송', anchor:'d', offset:-1, pull:true,
+    meta:'D-1 · 고발 대상',
+    path:'훈련대상자 관리 메뉴 · 문자 발송',
+    steps:['3차 대상자 명단 확인', '고발예고 문구로 발송', '발송 실패자는 따로 적어두고 전화 안내'],
+    note:'고발 기준 — 1일 참석 2일 결석, 1일 연기 3일 무단 등. 3차는 실제 고발 대상이므로 명단을 다시 확인한다.' },
+
+  { id:'nationwide-msg', phase:4, title:'전국단위 훈련 홍보메시지 발송 · 3차 통화', anchor:'d', offset:-1, pull:true, only:'nationwide',
+    meta:'전국단위 대상자',
+    path:'전산 시스템에서 전국단위 조회 후 무기수불대장에서 삭제',
+    steps:['전국단위 대상자에게 훈련 홍보메시지 발송', '3차 대상자는 통화까지 마무리'],
+    note:'전국단위 대상자는 따로 전자고지를 주지 않아도 되고, 훈련 하루 전에 홍보메시지만 보내면 된다. 단 3차 대상자는 통화까지 해야 한다.' },
+
+  { id:'jakgye-print', phase:4, title:'교육필증 · 연락처 확인 양식 · 작계번호판 인쇄 및 재단', anchor:'d', offset:-1, pull:true, only:'jakgye',
+    meta:'작계훈련 준비',
+    path:'일일업무일지 · 작계번호판 / 교육필증 출력',
+    steps:['교육필증 인쇄', '연락처 확인 양식 인쇄', '작계번호판 인쇄 후 재단', '예비군 신분증 관리철 준비'],
+    note:'작계훈련은 가위로 하나씩 잘라 쓰는 자료가 많아 미리 재단해 둔다.' },
+
+  { id:'jakgye-kit', phase:4, title:'예비군 신분증 관리철 · 창고 물품 준비', anchor:'d', offset:-1, pull:true, only:'jakgye',
+    meta:'창고에서 대장님 오시는 물품 준비',
+    path:'창고 물품 준비 · 훈련장 세팅',
+    steps:['예비군 신분증 관리철 준비', '창고에서 훈련 물품 꺼내기', '훈련장 세팅 확인'] },
+
+  { id:'dday-upload', phase:5, title:'업무연락 대대 업로드 자료 확인', anchor:'d', offset:0, pull:false,
+    meta:'훈련 당일',
+    path:'업무연락 · 대대 업로드 자료 확인',
+    steps:['대대 업로드 자료 확인', '당일 특이사항 정리', '일일업무일지 기록'] },
+
+  { id:'after-noshow', phase:6, title:'무단불참자 출귀국 확인 · 정정요청 / 훈련 빈주기 달기', anchor:'end', offset:1, pull:false,
+    meta:'종료 다음날',
+    path:'전산 시스템에서 보류자·해소자 목록 조회',
+    steps:['무단불참자 중 출국 사실이 있는 사람 확인',
+           '출국했다면 입영일·귀국일 확인 후 정정 요청',
+           '훈련 빈주기 달기'],
+    note:'보류처리 반영이 늦으면 다음 훈련 편성 때 미참으로 잡히므로 바로 정정한다.' },
+
+  { id:'after-reconcile', phase:6, title:'전자고지 · 우편 · 미교부 숫자 대조 · 교육훈련철 결재', anchor:'end', offset:1, pull:false,
+    meta:'종료 다음날',
+    path:'훈련 기록철(교육훈련철) 정리',
+    steps:['전자고지 발송·열람, 우편 발송, 미교부 인원 대조',
+           '숫자가 맞으면 교육훈련철 결재',
+           '다음 훈련 준비 상태 확인'] }
+];
+
+function buildTasks(tr, st){
+  var out = [];
+  if (!tr || !tr.start || !tr.end) return out;
+  var start = tr.start, end = tr.end, setup = tr.setupDate || tr.start;
+  var pulling = tr.pullWeekend !== false;
+  for (var i = 0; i < TASK_DEFS.length; i++){
+    var def = TASK_DEFS[i];
+    if (def.only === 'jakgye' && !isJakgye(tr.type)) continue;
+    if (def.only === 'nationwide' && !tr.nationwide) continue;
+    var from;
+    if (def.anchor === 'setup') from = addDays(setup, def.offset || 0);
+    else if (def.anchor === 'end') from = addDays(end, def.offset || 0);
+    else from = addDays(start, def.offset || 0);
+    var rawFrom = from;
+    var due = null;
+    if (def.to !== undefined && def.to !== null) due = addDays(start, def.to);
+    if (pulling && def.pull !== false) from = pullBack(st, from);
+    if (due){
+      if (pulling && def.pull !== false) due = pullBack(st, due);
+      if (due < from) due = from;
+    }
+    out.push({
+      key: tr.id + ':' + def.id,
+      defId: def.id,
+      title: def.title,
+      phase: def.phase,
+      date: from,
+      due: due || from,
+      isRange: !!due && due !== from,
+      steps: def.steps || [],
+      path: def.path || '',
+      note: def.note || '',
+      meta: def.meta || '',
+      pulled: pulling && def.pull !== false && from !== rawFrom
+    });
+  }
+  out.sort(function(a, b){
+    if (a.phase !== b.phase) return a.phase - b.phase;
+    return a.date < b.date ? -1 : a.date > b.date ? 1 : 0;
+  });
+  return out;
+}
+
+function taskStatus(task, base){
+  if (base < task.date) return 'upcoming';
+  if (base > task.due) return 'overdue';
+  return 'today';
+}
+
+function relLabel(tr, date){
+  var n = diffDays(tr.start, date);
+  if (n === 0) return 'D-DAY';
+  return n > 0 ? 'D+' + n : 'D' + n;
+}
+
+function trainingState(tr, base){
+  if (base < tr.start) return { code:'before', label:'D-' + diffDays(base, tr.start) };
+  if (base <= tr.end) return { code:'during', label: base === tr.start ? 'D-DAY' : 'D+' + diffDays(tr.start, base) };
+  return { code:'after', label:'종료' };
+}
+
+/* ---- 상시 · 정기 업무 ---- */
+var RECURRING_DEFS = [
+  { id:'outin', title:'출귀국자 확인', sched:'매일 아침', period:'daily',
+    path:'전산 시스템에서 보류자·해소자 목록 조회',
+    steps:['전날 출국자 · 오늘 출국자 · 복귀자 확인',
+           '장기출국자·전입자 인원을 이메일로 보낸 뒤 최근 출귀국자로 지정',
+           '특이사항은 온쪽(오른쪽) 예비군을 눌러 처리'],
+    note:'지침서 1장. 하루 업무는 출귀국자 인원 확인부터 시작한다.' },
+
+  { id:'dailylog', title:'일일업무일지 작성', sched:'매일 퇴근 전', period:'daily',
+    path:'일일업무일지 작성',
+    steps:['일일업무일지 열기',
+           '부대서 줄인, 조금 내려서 Email·SMS에 무엇을 했는지 적어두기',
+           '이름과 명수, 장기출국자·전입자 기록'],
+    note:'최근 기록을 그대로 복사해 붙여도 되고, 요일별로 달라지면 그 부분만 고친다.' },
+
+  { id:'mind', title:'정신전력 교육 작성', sched:'매주 수요일 10:30 ~ 11:00', period:'weekly', weekday:3,
+    path:'정신전력 교육',
+    steps:['수요일 10:30 ~ 11:00 정신전력 교육 작성'],
+    note:'지침서 19장.' },
+
+  { id:'cd', title:'불시 데이터 백업 (CD)', sched:'매월 2·4주 월요일', period:'monthly24', weekday:1,
+    path:'전산 시스템에서 자원 현황 일괄 다운로드',
+    steps:['전산 시스템의 자원 현황에서 바탕화면 폴더 생성',
+           '일괄 다운로드 체크 후 한셀 클릭, 파일 출력 방식은 엑셀',
+           'CD로 굽기'],
+    note:'지침서 3장. 2·4주 월요일에 CD 백업을 한다.' },
+
+  { id:'network', title:'비상소집망 점검', sched:'매년 1월 · 7월', period:'janjul',
+    path:'비상소집망 점검',
+    steps:['7년차 이상 예비군 소집망 점검', '문자 발송 실패자는 적어두었다가 재전송'],
+    note:'지침서 15장. 문자 발송이 실패되는 예비군은 적어두었다가 재전송한다.' },
+
+  { id:'hold', title:'보류자 점검', sched:'매년 10~12월 (4분기)', period:'q4',
+    path:'전산 시스템에서 보류자 관리',
+    steps:['보류자 명단 토대로 전화 확인', '출입국 사실 확인 후 승인 요청',
+           '보류 해소 처리 — 해소된 예비군은 동원훈련 대상으로 전환'],
+    note:'지침서 14장. 출입국 사실을 확인해 승인 요청하고 보류를 정리한다.' }
+];
+
+function recurringOccurrences(def, base){
+  var d = parseYMD(base), year = d.getFullYear(), month = d.getMonth();
+  var items = [], nextLabel = '';
+  if (def.period === 'daily'){
+    items.push({ key: def.id + ':' + base, date: base, label: longLabel(base) });
+  } else if (def.period === 'weekly'){
+    var occ = addDays(mondayOf(base), def.weekday - 1);
+    items.push({ key: def.id + ':' + occ, date: occ, label: mdwLabel(occ) });
+  } else if (def.period === 'monthly24'){
+    var first = ymd(new Date(year, month, 1));
+    var w1 = wd(first);
+    var firstMon = addDays(first, w1 === 1 ? 0 : (8 - w1) % 7);
+    [14, 28].forEach(function(off){
+      var occ2 = addDays(firstMon, off - 7);
+      items.push({ key: def.id + ':' + occ2, date: occ2, label: mdwLabel(occ2) });
+    });
+  } else if (def.period === 'janjul'){
+    if (month === 0 || month === 6){
+      var key = def.id + ':' + year + '-' + pad2(month + 1);
+      items.push({ key: key, date: ymd(new Date(year, month, 1)), label: year + '년 ' + (month + 1) + '월 점검' });
+    } else {
+      var ny = month < 6 ? year : year + 1;
+      nextLabel = '다음 점검 ' + ny + '년 ' + (month < 6 ? '7월' : '1월');
+    }
+  } else if (def.period === 'q4'){
+    if (month >= 9){
+      items.push({ key: def.id + ':' + year + '-Q4', date: ymd(new Date(year, 9, 1)), label: year + '년 4분기 점검' });
+    } else {
+      nextLabel = '다음 점검 ' + year + '년 10월';
+    }
+  }
+  return { items: items, nextLabel: nextLabel };
+}
+
+function lastDoneDate(doneMap, defId){
+  var max = null;
+  for (var k in doneMap){
+    if (!Object.prototype.hasOwnProperty.call(doneMap, k)) continue;
+    if (!doneMap[k]) continue;
+    if (k.indexOf(defId + ':') !== 0) continue;
+    var tail = k.slice(defId.length + 1);
+    var asDate = null;
+    if (/^\d{4}-\d{2}-\d{2}$/.test(tail)) asDate = tail;
+    else if (/^\d{4}-\d{2}$/.test(tail)) asDate = tail + '-01';
+    else if (/^\d{4}-Q[1-4]$/.test(tail)) asDate = tail.slice(0, 4) + '-' + pad2((Number(tail.slice(6)) - 1) * 3 + 1) + '-01';
+    if (asDate && (!max || asDate > max)) max = asDate;
+  }
+  return max;
+}
+
+/* ---- 지침서 지식베이스 (PDF 1~19항) ---- */
+var GUIDE_KB = [
+  { id:'g1-start', group:'출귀국자 관리', title:'하루 시작은 출귀국자 인원 확인',
+    keys:'출귀국자 하루 시작 아침 인원 확인 매일',
+    lines:['하루 첫 업무는 출귀국자 인원 확인이다(원문 1장 0항).','어제 출국자·오늘 출국자·복귀자를 확인하고 특이사항을 정리한다.'],
+    path:'전산 시스템에서 보류자 관리 · 출귀국자' },
+
+  { id:'g1-14', group:'출귀국자 관리', title:'출귀국자 14일 법칙',
+    keys:'출귀국자 14일 법칙 최초출국일 최초 출국일 귀국 재출국 국내체류기간',
+    lines:['14일 이내에 귀국했다가 다시 출국하면 최초 출국일자가 바뀌지 않는다.','출국일과 귀국일은 국내 체류기간과 연결해서 판단한다.','잠깐 귀국한 것은 거주 증명으로 인정되지 않는다.'],
+    ex:['4월 1일 영국 출국, 12월 3일 귀국, 12월 7일 다시 출국 = 최초 출국일은 4월 1일'],
+    path:'전산 시스템에서 장기출국자 보류 관리' },
+
+  { id:'g1-long', group:'출귀국자 관리', title:'장기출귀국자 보류처리',
+    keys:'장기출귀국 장기출국자 보류처리 보류 날짜 설정 8년차 수정버튼 미하향 기타 청군',
+    lines:['보류를 걸 때 날짜 설정이 핵심이다. 8년차 예비군은 편성 전 8년차 기준일로 지정한다.','이름을 누르면 오른쪽 수정 버튼이 있다. 해외에서 통지가 안 되는 상태면 미하향/기타로 수정하고 청군 버튼을 눌러 날짜를 저장한다.','전년도 보류사항에 있는지 실제로 파악해 둔다.'],
+    ex:['2028년 12월 31일 기한이면, 그 날짜가 지나고 8년차에 편성된 다음 12월 31일로 지정'],
+    path:'전산 시스템에서 장기출국자 보류 관리' },
+
+  { id:'g1-list', group:'출귀국자 관리', title:'보류자 · 해소자 목록 지정',
+    keys:'보류자 해소자 목록 보류기간 저장버튼 연기 전시근로역 해외 출국',
+    lines:['이름을 누르면 왼쪽 하단에 날짜가 나온다. 처음에는 공란이다.','보류 기간을 다시 지정하고 오른쪽 상단 저장 버튼을 반드시 누른다.','연기·전시근로역은 다른 부대에서 지정하는 경우가 있고, 해외 출국자는 연기자로 지정한다.'],
+    path:'전산 시스템에서 보류자·해소자 목록 조회' },
+
+  { id:'g1-mail', group:'출귀국자 관리', title:'보류처리 메일 · 문자 보내기',
+    keys:'보류처리 메일 메시지 문자 sms 알림 발송 선택대상 메일 작성 출국일 보류기간',
+    lines:['대상자 체크, 이메일·핸드폰 번호 불러오기, 오른쪽 상단 선택대상 메일 작성.','본문에 몇 일 출국했는지, 보류 기간은 언제까지인지 꼭 고쳐서 보낸다.','메일과 SMS는 묶어서 한 번에 발송한다.'],
+    path:'보류자·해소자 목록에서 메일 작성 후 전송' },
+
+  { id:'g1-daily', group:'출귀국자 관리', title:'일일업무일지에 남기는 내용',
+    keys:'일일업무일지 기록 이름 명수 장기출국자 전입자 보류 승인',
+    lines:['요일별 항목을 클릭하고 보류자·승인·Email·SMS에 무엇을 했는지 적는다.','이름과 명수, 장기출국자·전입자를 함께 적는다.'],
+    path:'일일업무일지 작성' },
+
+  { id:'g1-organize', group:'출귀국자 관리', title:'보류자 편성부대 최신화',
+    keys:'보류자 편성부대 최신화 전투편성 소대 총괄 인쇄 저장 병규 방침자 장해인 정관상',
+    lines:['전투편성 목록에서 해당 소대를 클릭하고 이름 조회, 총괄 인쇄, 아래로 내려 저장.','편성이 끝나면 출귀국자 목록으로 돌아온다.','병규 보류자·방침자는 구역을 해도 미하향/기타를 유지한다. 보류 상태에서 한 번 더 구역 처리를 하기 때문이다.'],
+    path:'전산 시스템에서 전투편성 목록 조회' },
+
+  { id:'g1-remain', group:'출귀국자 관리', title:'남은 출귀국자 정리 (보류해소 · 연기)',
+    keys:'출국자 귀국자 보류해소 연기 미하향 41세 이상 하경',
+    lines:['출국자는 보류자 또는 연기자, 귀국자는 보류해소.','귀국자는 하경(6월/9월), 출국자는 미하향/기타로 바꾼다.','41세 이상은 무조건 미하향/기타로 변경한다.','다른 문제가 있으면 오른쪽 연기 버튼을 누른다.'],
+    path:'전산 시스템에서 보류자 관리 · 출귀국자' },
+
+  { id:'g2-out', group:'전출자 · 전입자', title:'전출자 처리',
+    keys:'전출자 전출 무기수불대장 대상자 감소 총괄 전출 인쇄 상명',
+    lines:['전출자 중 대대장·소대장이 있으면 지책 재편성을 위해 무기수불대장에 바로 추가한다.','무기수불대장 인쇄: 기지급 인쇄, 조련 선택, 정렬방식 상명, 인쇄.','총검(총괄) 대상이 아닌지 고육사항을 확인한다.','일일업무일지 그 외 업무에 "대상자(○○명) 1명 감소 · 총괄 전출"이라고 적고 저장한다.'],
+    path:'훈련대상자 관리 메뉴 · 무기수불대장' },
+
+  { id:'g2-in', group:'전출자 · 전입자', title:'전입자 처리',
+    keys:'전입자 전입 조편예정 보류원서 보습여지 축하메시지 411101 이월작계 전화',
+    lines:['가장 먼저 고육사항을 확인하고 통보를 조기에 처리한다.','편성파트 동원소집부대 명단의 [조편예정]을 확인한다. 지정돼 있으면 조원을 추가할 필요가 없다.','우리가 관리하는 조원은 기본훈련·전/후반기 작계훈련·동원2형뿐이다.','보류 상태로 넘어왔으면 보류원서를 확인하고, 없으면 전입자 전원에게 전화로 확인한다.','전투편성 후 축하(보습여지) 메일을 보내고 일일업무일지 작성.','전입 0년차는 수정 후 미교관에 411101을 넣는다. 이월작계·동원2 대상자는 어디서 소집받을지 전화로 확인.'],
+    path:'훈련대상자 관리 메뉴 · 무기수불대장 / 전투편성' },
+
+  { id:'g2-designate', group:'전출자 · 전입자', title:'지정작계자 · 대체 지정작계자',
+    keys:'지정작계자 대체 지정작계자 작계 지정 소집추가 통합소집 신분자',
+    lines:['그날 훈련이 작계되거나 대신 지정된 예비군을 말한다.','소집통을 확인하고 고육사항이 없으면 소집을 추가한다.','소집을 추가하면 전자고지·알림톡은 보내지 않는다(전입자와 다르다).','전투편성을 해 주고 일일업무일지를 작성한다.'],
+    path:'전산 시스템에서 지정작계자 소집 추가' },
+
+  { id:'g3-post', group:'훈련 통보', title:'우편통지 절차 (1·2차 미열람자)',
+    keys:'우편통지 방법 절차 우편 인쇄 봉투 우편요금 후납 발송표 미열람 1차 2차 장축 소집일지',
+    lines:['유형별 소집통지서에서 우편 인쇄, 검색조건에 미열람 조회, 개인 차수 클릭, 1·2차 체크, 장축 소집일지 선택, 통지서 인쇄, 우편용 인쇄 순서로 진행.','편지봉투에 부착해 우체국에 제출한다. 운송장이 찍힌 발송표를 함께 내야 후납으로 처리된다.'],
+    path:'훈련대상자 관리 메뉴 · 유형별 소집통지서 (우편 인쇄)' },
+
+  { id:'g3-third', group:'훈련 통보', title:'3차 미열람자 — 전자고지 재발송 · 전화',
+    keys:'3차 미열람 전자고지 재발송 전화 안내 종 모양',
+    lines:['전자고지를 한 번 더 보내고 전화한다.','안내 문구: "네이버 우측 상단 종 모양 눌러서 통지서 한 번만 꼭 확인해 주세요."'],
+    path:'훈련대상자 관리 메뉴 · 유형별 소집통지서' },
+
+  { id:'g4-backup', group:'데이터 백업', title:'불시 데이터 백업 (CD)',
+    keys:'데이터 백업 불시 백업 cd 매월 2 4주 월요일 일괄 다운로드 엑셀 한셀 폴더',
+    lines:['매월 2·4주 월요일에 CD로 백업한다.','전산 시스템의 자원 현황에서 바탕화면에 폴더 생성, 일괄 다운로드 체크 후 한셀 클릭, 파일 출력 방식 엑셀.','CD로 굽고, 인터넷이 안 되는 PC에서 관리자 권한으로 실행해 확인한다.'],
+    path:'전산 시스템에서 자원 현황 일괄 다운로드' },
+
+  { id:'g5-number', group:'업무 관리', title:'업무 숫자 줄이는 방법',
+    keys:'업무 숫자 줄이기 나의 업무 현황 수정 자동 집계',
+    lines:['2025년까지는 자동 집계가 아니므로 숫자를 직접 줄여야 한다.','처리한 업무(전출·보류·해소)를 그때그때 반영해 두면 월말에 몰리지 않는다.'],
+    path:'전산 시스템에서 업무 현황 수정' },
+
+  { id:'g5-bus', group:'업무 관리', title:'예비군 버스 신청 확인',
+    keys:'예비군 버스 신청 자유게시판 노선 인원 담당자',
+    lines:['훈련 전 버스 신청 인원·노선을 확인해 담당자에게 전달한다.'],
+    path:'소속 부대 게시판 · 자유게시판' },
+
+  { id:'g6-dailytip', group:'업무 관리', title:'일일업무일지 — 작성 버튼을 누르면 안 된다',
+    keys:'일일업무일지 작성 버튼 초기화 플러스 마이너스 추가 삭제 팁',
+    lines:['오른쪽 상단 작성 버튼은 초기화 버튼이니 절대 누르지 않는다.','본문의 + / - 버튼으로 항목을 추가·삭제하며 작성한다.'],
+    path:'일일업무일지 작성' },
+
+  { id:'g7-concept', group:'예비군 훈련', title:'동원 1형 · 2형 · 동원 대상자 구분',
+    keys:'동원1형 동원2형 28시간 32시간 2박3일 4일 입영 출퇴근 동원대상자 미대상자 전시근로역 대학생 8시간',
+    lines:['동원 1형 = 2박 3일 28시간. 부대에서 자고 먹고 입영해서 받는 훈련.','동원 2형 = 4일 32시간. 출퇴근하며 받는 훈련.','동원 대상자 = 전역 후 1~4년차 중 전시에 현역부대에 동원되는 사람. 전시근로역도 동원 2형 부과 대상.','동원 미대상자 = 전시에도 현역부대에 동원되지 않는 사람. 1~4년차에 동원 2형을 바로 부과.','대학생은 8시간만 받는다(방침 일부 보류자).'] },
+
+  { id:'g7-years', group:'예비군 훈련', title:'연차별 훈련 시간',
+    keys:'연차별 5~6년차 기본훈련 8시간 작계 전반기 후반기 6시간 소집점검 4시간 7~8년차 훈련 없음 이월훈련 공익',
+    lines:['5~6년차: 기본훈련 8시간 / 작계 전·후반기 각 6시간.','소집점검 인원은 8시간을 4시간+4시간으로 쪼개 작계 전·후반기에 편성한다. 이월훈련이 있으면 당해년도 편성보다 이월훈련이 우선.','7~8년차: 훈련 없음. 8년차 종료와 동시에 예비군 대상자에서 제외(이월훈련이 있으면 부과).','작계·공익은 1~6년차까지 동원훈련을 받고, 동원 2형도 입영 훈련이다.'] },
+
+  { id:'g7-round', group:'예비군 훈련', title:'동원 2형 차수 적용 원칙',
+    keys:'동원1형 불참 이월 차수 연기 무단불참 강제퇴소 조기퇴소 1차 2차 3차 미부과',
+    lines:['연기 = 차수 유지 / 무단불참 = 차수 상승 / 강제퇴소 = 차수 상승 / 조기 사유 퇴소 = 차수 유지.','동원 1형 연기자·조기퇴소·귀가는 동원 2형 1차로 이월되고, 동원 1형 퇴소자는 동원 2차로 이동한다.','1차 훈련은 당해년도 대상자만, 2·3차 훈련은 이월대상자 포함 모든 대상자.','동원 1형은 병무청 주관이라 불참하면 고발된다. 전시근로역은 무조건 동원 1형(11형).'],
+    ex:['1차 미부과·연기·조기퇴소 = 1차 그대로','1차 강제퇴소 = 2차(연기 시)','1차 무단불참 = 2차','2차 연기·조기퇴소 = 2차 / 2차 강제퇴소 = 3차(연기 시) / 2차 무단불참 = 3차'] },
+
+  { id:'g7-d1-noshow', group:'예비군 훈련', title:'동원 1형 불참하면? (고발 · 이월)',
+    keys:'동원1형 불참 고발 병무청 이월 동원2형 1차 파로 무단불참',
+    lines:['동원 1형은 병무청 주관이라 불참하면 고발된다.','연기·조기퇴소·귀가는 동원 2형 1차로 이월되고, 동원 1형 퇴소자는 동원 2차로 이동한다.','훈련 중 강제퇴소되면 차수가 올라간다(연기 시).'],
+    ex:['1차 불참이면 2차 부과','2차 불참이면 3차 부과'],
+    path:'전산 시스템에서 보류자 관리' },
+
+  { id:'g7-reenter', group:'예비군 훈련', title:'동원 1형 재입영 — 있는 경우 / 없는 경우',
+    keys:'동원1형 재입영 존예정 병무청 20일전 4.5 3.0 2.0 출국 총검자 훈련예정',
+    lines:['[존예정] 클릭 후 재입영은 병무청이 동원 1형을 다시 부과한 것이므로 우리가 훈련을 부과할 필요가 없다.','재입영 없음: 해외에 있어 20일 전 통지를 못 받으면 지켜보다가 12.5에 동원 1형 1차를 부과한다.','재입영 있음: 출국 상태면 재입영을 기다리고, 국내에 있으면 재입영이 있어도 동원 2형을 부과한다.'],
+    ex:['case 1: 25.3.1 이후 출국이면 재입영을 기다린다','case 2: 국내 체류·미등지면 동원 2형 부과'],
+    path:'소속 부대 훈련안내 · 신규작성(훈련 탑재)' },
+
+  { id:'g7-holdcheck', group:'예비군 훈련', title:'보류자 훈련 확인법 (보류 가능 / 불가)',
+    keys:'보류자 훈련 확인 보류 가능 불가 2차 무단불참 연기 보류신청',
+    lines:['1차 무단불참 뒤 2차도 무단불참이면 보류가 불가능하다.','2차를 연기했다면 보류가 가능하다.','전자고지·알림톡·홍보메일을 잘 보냈는지, 숫자가 맞는지 확인한다. 편성 시 빈주기를 확실히 입력한다.'],
+    ex:['24.7.24 1차 무단불참, 9.20 보류신청, 11.20 2차 무단불참 = 보류 불가','24.7.24 1차 무단불참, 9.20 보류신청, 11.20 2차 연기 = 보류 가능'] },
+
+  { id:'g7-defer-man', group:'예비군 훈련', title:'동원형 연기자 확인',
+    keys:'동원형 연기자 연기 고육사항 훈련예정 재입영 출국증',
+    lines:['동원형 연기자 화면에서 해당 예비군의 고육사항을 확인한다.','[훈련예정]에서 재입영이 있는지, 지금 출국 상태인지 체크한다.'],
+    path:'전산 시스템에서 동원형 연기자 조회' },
+
+  { id:'g8-plan', group:'훈련 편성', title:'훈련 편성 방법',
+    keys:'훈련 편성 방법 소집편성 일괄 관리 준조추가 발파 저장 편성파트',
+    lines:['일괄 관리에서 소집편성, 발파 선택 x, 이름 선택 후 아래로 내려 저장.','편성파트에 준조추가를 해야 유형별 대상자에 편성된다.','준조추가는 직접 추가가 아니라 위 방식으로 해야 소집편성이 완료된다.','전입자·대체지정·지정작계자는 있으면 편성한다.'],
+    path:'훈련대상자 관리 메뉴 · 일괄 관리 소집편성' },
+
+  { id:'g8-kobal', group:'훈련 편성', title:'고발 면제 조건',
+    keys:'고발 면제 50% 부과기준 무단불참 결석 연기 조퇴 강제퇴소 4일 32시간',
+    lines:['부과기준의 50% 이상을 채우면 고발하지 않는다.','4일(32시간)을 부여했다고 가정해 계산한다.','통지서 출력·입력이 확인되면 열람한 것으로 간주한다.'],
+    ex:['2일 참석 · 2일 무단 = 고발 없음','2일 연기 · 2일 무단 = 고발 없음','1일 연기 · 3일 무단 = 고발','1일 참석 · 1일 연기 · 2일 무단 = 고발 없음','1일 참석 · 1일 조퇴 · 2일 무단 = 고발 없음','1일 참석 · 2일 강제퇴소 · 나머지 무단 = 고발'] },
+
+  { id:'g8-after', group:'훈련 편성', title:'편성 후 D-day 일정',
+    keys:'편성 후 일정 d-15 d-8 d-7 d-3 d-2 d-1 디데이 결산 미교부 독려문자 고발예고 빈주기',
+    lines:['편성 당일: 전자고지·알림톡, 무기수불대장 인쇄·훈련탑재.','+5일: 발송결과 확인·홍보메일, 1·2차 우편통지, 3차 전자고지·전화.','D-15~D-8: 소집통지서 결산 / D-7~D-3: 3차 미교부 보고 / D-3~D-2: 독려문자.','D-1: 연기자·보류자 입력, 1·2차 독려 재발송, 3차 고발예고.','종료+1: 무단불참자 출귀국 확인·정정요청, 빈주기, 숫자 대조·교육훈련철 결재.'],
+    path:'훈련대상자 관리 메뉴 · 일괄 관리' },
+
+  { id:'g9-nationwide', group:'훈련 편성', title:'전국단위 훈련 대처',
+    keys:'전국단위 전국 단위 다른 훈련소 조회 무기수불대장 삭제 홍보메시지 3차 통화',
+    lines:['전국단위 훈련 신청 = 우리 동대가 아니라 다른 예비군 훈련소에 신청한 것.','이미 편성했으면 전국단위 조회, 미리 띤 인원 확인, 무기수불대장에서 삭제, 일일업무일지 순서로 처리한다.','전자고지 없이 훈련 하루 전 홍보메시지만 보내고, 3차 대상자는 통화까지 마무리.'],
+    ex:['대상 XX명 : 대상자 N명 (이근, 노작계)'],
+    path:'전산 시스템에서 전국단위 조회' },
+
+  { id:'g8-tool-cd', group:'훈련 편성', title:'지원 프로그램 내려받기 (CD 굽기)',
+    keys:'지원 프로그램 내려받기 설치 cd 굽기 관리자 권한',
+    lines:['지원 프로그램을 내려받아 CD로 굽고, 인터넷이 안 되는 PC에서 관리자 권한으로 실행한다.','접속 계정은 부대 담당자에게 확인한다.'],
+    path:'지원 프로그램 내려받기 · CD 굽기' },
+
+  { id:'g10-defer', group:'훈련 연기', title:'훈련 연기 처리 절차',
+    keys:'훈련 연기 처리 소집신청 자격 승인 연기기간 연기원서 이메일 결재',
+    lines:['예비군이 올린 자료를 다운로드·인쇄하고 자격 증명서를 확인한다.','자격 적정성은 예비군 훈련 지침서를 기준으로 판단한다. 부적정하면 전화로 보완자료를 안내한다.','적정하면 처리결과 승인 + 처리결과 내용 + 연기기간 설정 후 저장.','연기원서 인쇄, 스템플러, 결재, 승인 이메일, 일일업무일지 순서로 마무리한다.'],
+    path:'훈련 연기 신청 · 예비군 업로드 자료 확인 후 처리결과 등록' },
+
+  { id:'g10-disease', group:'훈련 연기', title:'질병 연기기간 계산',
+    keys:'질병 연기기간 진단서 진단일 접수일 1주간 치료 체중일',
+    lines:['진단일과 접수일을 기준으로 연기기간을 잡는다.','진단서에 적힌 치료 기간을 넘겨 잡지 않는다.'],
+    ex:['진단 10.14 / 접수 10.14 (1주간 치료) = 10.14 ~ 10.20','진단 10.14 / 접수 10.15 = 10.14 ~ 10.15','진단 10.10 / 접수 10.14 = 10.14 ~ 10.16'] },
+
+  { id:'g10-result', group:'훈련 결과', title:'훈련 결과 처리',
+    keys:'훈련 결과 처리 유형별 소집 결과조회 무단불참 빨간색 출귀국 교육훈련철 숫자 대조 업무연락',
+    lines:['유형별 소집 결과조회에서 무단불참(빨간색) 인원의 출귀국 상태를 다시 확인한다.','빈주기로 파악해 연기 처리한 사람은 출귀국 확인을 따로 하지 않아도 된다.','훈련 당일 업무연락에 올라온 대대 자료와 결과조회를 비교해 이중 체크한다.','전자고지·우편·미교부 인원 숫자를 맞추고 교육훈련철에 정리해 결재받는다.'],
+    path:'유형별 소집 결과조회 · 훈련 기록철(교육훈련철)' },
+
+  { id:'g11-security', group:'보안 · 서류', title:'사이버 보안 진단',
+    keys:'사이버 보안 진단 보안 점검 프로그램 실행 검사 항목 통과',
+    lines:['보안 점검 프로그램을 실행해 검사 항목 3개를 모두 통과시키면 된다. 가장 간단한 방법이다.'] },
+
+  { id:'g12-missing', group:'보안 · 서류', title:'통지서 미교부 처리',
+    keys:'미교부 통지서 방문용 미열람 확인서 결재 업무용 pc',
+    lines:['업무용 PC에서 미교부 대상 공문을 찾아 초년·대상 예비군에 맞게 수정한다.','전자고지 미열람 확인서와 유형별 소집통지서(방문용)를 인쇄한다.','스템플러로 찍어 결재받으면 끝.'],
+    path:'업무용 PC에서 미교부 공문 · 유형별 소집통지서(방문용)' },
+
+  { id:'g13-jakgye', group:'보안 · 서류', title:'작계훈련 준비물',
+    keys:'작계 준비물 교육필증 연락처 확인 양식 작계번호판 신분증 관리철 창고 물품 재단 가위',
+    lines:['업무용 PC에서 교육필증·연락처 확인 양식·작계번호판을 인쇄한다.','교육필증과 번호판은 가위로 하나씩 자른다.','예비군 신분증 관리철을 준비하고, 창고에서 꺼내올 물품을 준비한다.','이렇게 하면 서류 준비는 끝.'],
+    path:'업무용 PC에서 교육필증 · 연락처 확인 양식 · 작계번호판 인쇄' },
+
+  { id:'g14-holdcheck', group:'정기 점검', title:'보류자 점검 (4분기)',
+    keys:'보류자 점검 4분기 전화 확인 출입 증명서 동원훈련 보류 해소',
+    lines:['보류자 명단을 토대로 전화 확인하고, 보류자 명의 뒷면에 색인한다.','방침 일부는 출입 일자를 확인한 뒤 출입 증명서를 끊어 올리라고 통지한다.','해소된 예비군은 기본훈련이 아니라 동원훈련 대상으로 전환된다.'],
+    path:'전산 시스템에서 보류자 관리' },
+
+  { id:'g15-network', group:'정기 점검', title:'비상소집망 점검',
+    keys:'비상소집망 점검 1월 7월 7년차 문자 실패 재전송 전반기 후반기',
+    lines:['1월과 7월에 전반기·후반기 과목으로 나누어 실시한다.','목적은 7년차 이상 예비군의 소집망 점검.','전원에게 문자를 보낸 뒤 편성파트 비교권에 점검 날짜를 기입한다.','발송 실패자는 적어두었다가 재전송한다.'] },
+
+  { id:'g16-holdinput', group:'정기 점검', title:'보류자 입력과 문자 전송',
+    keys:'보류자 입력 신규 보류구분 보류기간 문자 전송 보류자 목록 관사 지적',
+    lines:['보류자 메뉴에서 신규, 이름 검색, 보류구분·보류기간 설정 후 저장.','문자는 편성파트에서 보내면 관사 지적사항이 생기므로 무조건 보류자 목록에서 보낸다.'],
+    path:'전산 시스템에서 보류자 신규 등록' },
+
+  { id:'g17-early', group:'정기 점검', title:'조기퇴소 vs 귀가',
+    keys:'조기퇴소 귀가 차이 28시간 32시간 차감 이월',
+    lines:['차이는 그날 하루만 기억하면 된다.','귀가는 28시간 훈련예정이어도 32시간 기준에서 훈련받은 시간만큼 차감하는 것.','조기퇴소·귀가 모두 동원 1형에서는 동원 2형 1차로 이월된다.'] },
+
+  { id:'g18-force', group:'정기 점검', title:'훈련 강제 편성',
+    keys:'훈련 강제 편성 유형별 고육훈련 대상자 훈련대상자 추가 재확인',
+    lines:['유형별 훈련 대상자에서 훈련대상자 추가, 이름 적성 후 저장, 편성파트 재확인.'] },
+
+  { id:'g19-mind', group:'정기 점검', title:'정신전력 교육',
+    keys:'정신전력 수요일 10시 30분 11시 교육 작성',
+    lines:['매주 수요일 10:30 ~ 11:00 정신전력 교육을 작성한다.'] }
+];
+
+var GUIDE_CHIPS = [
+  '출귀국자 14일 법칙', '고발 면제 조건', '동원1형 불참/이월', '질병 연기기간',
+  '조기퇴소 vs 귀가', '작계훈련 준비물', '우편통지 절차', '데이터 백업',
+  '일일업무일지', '보류자 문자', '전국단위 훈련', '훈련 편성 방법'
+];
+
+var GUIDE_SYN = { '고육':['교육'], '총검':['총괄'], '디데이':['D-day','D-'], '미교부':['방문용'] };
+var GUIDE_STOP = { '방법':1, '절차':1, '차이':1, '조건':1, '무엇':1, '어떻게':1, '언제':1, '뭐야':1, '알려줘':1, '때':1, '경우':1 };
+
+function normQ(s){ return String(s || '').toLowerCase().replace(/\s+/g, ''); }
+function tokenizeQ(q){
+  return String(q || '').toLowerCase().split(/[\s,\/\?\!\.·]+/).filter(function(t){ return t.length > 0; });
+}
+function searchGuide(q){
+  var tokens = tokenizeQ(q);
+  if (!tokens.length) return [];
+  var all = [];
+  tokens.forEach(function(t){
+    all.push(t);
+    var syn = GUIDE_SYN[t];
+    if (syn) syn.forEach(function(x){ all.push(x); });
+  });
+  var scored = [];
+  for (var i = 0; i < GUIDE_KB.length; i++){
+    var e = GUIDE_KB[i];
+    var title = normQ(e.title), keys = normQ(e.keys), group = normQ(e.group);
+    var body = normQ((e.lines || []).join(' ') + ' ' + (e.path || '') + ' ' + ((e.ex || []).join(' ')));
+    var score = 0;
+    for (var j = 0; j < all.length; j++){
+      var t = normQ(all[j]);
+      if (!t) continue;
+      if (GUIDE_STOP[t]){
+        if (title.indexOf(t) >= 0 || keys.indexOf(t) >= 0 || body.indexOf(t) >= 0) score += 1;
+        continue;
+      }
+      var s = 0;
+      if (title.indexOf(t) === 0) s = 10;
+      else if (title.indexOf(t) > 0) s = 8;
+      else if (keys.indexOf(t) >= 0) s = 6;
+      else if (group.indexOf(t) >= 0) s = 3;
+      else if (body.indexOf(t) >= 0) s = 2;
+      else if (t.length >= 2){
+        var stem = t.slice(0, Math.max(2, t.length - 1));
+        if (title.indexOf(stem) >= 0 || keys.indexOf(stem) >= 0) s = 1;
+      }
+      score += s;
+    }
+    if (score > 0) scored.push({ e: e, score: score, i: i });
+  }
+  scored.sort(function(a, b){ return b.score - a.score || a.i - b.i; });
+  return scored.map(function(x){ return x.e; });
+}
+
+function guideGroups(){
+  var out = [], seen = {};
+  for (var i = 0; i < GUIDE_KB.length; i++){
+    var g = GUIDE_KB[i].group;
+    if (!seen[g]) { seen[g] = { name: g, count: 0 }; out.push(seen[g]); }
+    seen[g].count++;
+  }
+  return out;
+}
+
+/* ---- 상태 ---- */
+function uid(){ return 'tr' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
+function makeTraining(o){
+  var base = { id: uid(), name:'', type:'기본훈련', start:'', end:'', setupDate: todayStr(),
+    pullWeekend: true, nationwide: false, memo:'', createdAt: Date.now() };
+  for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) base[k] = o[k];
+  return base;
+}
+function defaultState(){
+  return { version: 1, unit: '우리 동대', trainings: [], done: {}, recurringDone: {}, holidays: [], seeded: false };
+}
+function seedSample(st){
+  var tr = makeTraining({
+    name:'12월 기본훈련', type:'기본훈련',
+    start:'2026-11-30', end:'2026-12-03', setupDate:'2026-11-16',
+    pullWeekend:true, nationwide:false, memo:'예시로 넣어둔 훈련이에요. 필요 없으면 삭제하세요.'
+  });
+  tr.sample = true;
+  st.trainings.push(tr);
+  var today = todayStr();
+  buildTasks(tr, st).forEach(function(t){ if (t.due < today) st.done[t.key] = true; });
+  st.seeded = true;
+  return st;
+}
+/*==LOGIC-END==*/
+
+/* ===================== 상태 · 저장 ===================== */
+var STORAGE_KEY = 'reserveTodo.v1';
+var state = loadState();
+var ui = { tab:'today', baseDate: todayStr(), expanded: {}, sheet: null, q:'' };
+
+function loadState(){
+  try{
+    var raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return seedSample(defaultState());
+    var s = JSON.parse(raw);
+    var d = defaultState();
+    for (var k in d) if (!Object.prototype.hasOwnProperty.call(s, k)) s[k] = d[k];
+    if (!Array.isArray(s.trainings)) s.trainings = [];
+    if (!s.done || typeof s.done !== 'object') s.done = {};
+    if (!s.recurringDone || typeof s.recurringDone !== 'object') s.recurringDone = {};
+    if (!Array.isArray(s.holidays)) s.holidays = [];
+    return s;
+  } catch(e){
+    return seedSample(defaultState());
+  }
+}
+function saveState(){
+  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+  catch(e){ toast('저장 공간을 쓸 수 없어요'); }
+}
+
+/* ===================== 유틸 ===================== */
+function esc(s){
+  return String(s === undefined || s === null ? '' : s).replace(/[&<>"']/g, function(c){
+    return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c];
+  });
+}
+var toastTimer = null;
+function toast(msg){
+  var el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){ el.classList.remove('show'); }, 2000);
+}
+function sortedTrainings(){
+  return state.trainings.slice().sort(function(a, b){ return a.start < b.start ? -1 : a.start > b.start ? 1 : 0; });
+}
+function progressOf(tr){
+  var tasks = buildTasks(tr, state);
+  var done = 0;
+  tasks.forEach(function(t){ if (state.done[t.key]) done++; });
+  return { total: tasks.length, done: done, pct: tasks.length ? Math.round(done / tasks.length * 100) : 0, tasks: tasks };
+}
+
+/* ===================== 아이콘 ===================== */
+var ICON = {
+  today:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.4 12.3l2.4 2.4 4.8-4.9"/></svg>',
+  list:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 6.5h11M8.5 12h11M8.5 17.5h11"/><circle cx="4.6" cy="6.5" r="1.1" fill="currentColor" stroke="none"/><circle cx="4.6" cy="12" r="1.1" fill="currentColor" stroke="none"/><circle cx="4.6" cy="17.5" r="1.1" fill="currentColor" stroke="none"/></svg>',
+  repeat:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5a6 6 0 0 1 6-6h8"/><path d="M15.2 1.8L18.6 4.5 15.2 7.2"/><path d="M20 13.5a6 6 0 0 1-6 6H6"/><path d="M8.8 22.2L5.4 19.5 8.8 16.8"/></svg>',
+  check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12.5l4.6 4.6L19.5 6.8"/></svg>',
+  chev:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><path d="M9 5l7 7-7 7"/></svg>',
+  plus:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>',
+  search:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>'
+};
+
+/* ===================== 렌더 ===================== */
+function render(goTop){
+  var y = window.scrollY;
+  var view = document.getElementById('view');
+  if (ui.tab === 'today') view.innerHTML = renderToday();
+  else if (ui.tab === 'trainings') view.innerHTML = renderTrainings();
+  else if (ui.tab === 'recurring') view.innerHTML = renderRecurring();
+  else view.innerHTML = renderGuide();
+  document.getElementById('navSub').textContent = (state.unit || '우리 동대') + ' 상근예비역';
+  renderTabbar();
+  if (goTop) window.scrollTo(0, 0); else window.scrollTo(0, y);
+}
+
+function renderTabbar(){
+  var base = ui.baseDate;
+  var dueCount = 0;
+  sortedTrainings().forEach(function(tr){
+    buildTasks(tr, state).forEach(function(t){
+      var st = taskStatus(t, base);
+      if ((st === 'today' || st === 'overdue') && !state.done[t.key]) dueCount++;
+    });
+  });
+  var tabs = [
+    { id:'today', label:'오늘 할 일', icon: ICON.today, badge: dueCount },
+    { id:'trainings', label:'훈련 목록', icon: ICON.list, badge: 0 },
+    { id:'recurring', label:'상시 업무', icon: ICON.repeat, badge: 0 },
+    { id:'guide', label:'지침 검색', icon: ICON.search, badge: 0 }
+  ];
+  document.getElementById('tabbar').innerHTML = tabs.map(function(t){
+    return '<button class="tab ' + (ui.tab === t.id ? 'active' : '') + '" data-act="tab" data-tab="' + t.id + '">' +
+      '<span class="tab-wrap">' + t.icon +
+      (t.badge ? '<span class="badge">' + (t.badge > 9 ? '9+' : t.badge) + '</span>' : '') +
+      '</span><span>' + t.label + '</span></button>';
+  }).join('');
+}
+
+/* ---------- 오늘 할 일 ---------- */
+function renderToday(){
+  var base = ui.baseDate;
+  var isToday = base === todayStr();
+  var trainings = sortedTrainings();
+
+  var todayItems = [], overdueItems = [], soonItems = [];
+  trainings.forEach(function(tr){
+    buildTasks(tr, state).forEach(function(t){
+      var done = !!state.done[t.key];
+      var st = taskStatus(t, base);
+      var row = { tr: tr, task: t, done: done, st: st };
+      if (st === 'today') todayItems.push(row);
+      else if (st === 'overdue' && !done) overdueItems.push(row);
+      else if (st === 'upcoming' && !done && diffDays(base, t.date) <= 7) soonItems.push(row);
+    });
+  });
+  todayItems.sort(function(a, b){ return (a.done - b.done) || (a.task.due < b.task.due ? -1 : 1); });
+  overdueItems.sort(function(a, b){ return a.task.due < b.task.due ? -1 : 1; });
+  soonItems.sort(function(a, b){ return a.task.date < b.task.date ? -1 : 1; });
+
+  var openToday = todayItems.filter(function(r){ return !r.done; }).length;
+  var dailyDone = 0, dailyTotal = 0;
+
+  var html = '';
+  html += '<h1 class="h1">' + (isToday ? '오늘 할 일' : '미리 보기') + '</h1>';
+  html += '<p class="h1-sub">' + longLabel(base) + ' · ' +
+    (openToday ? '할 일 ' + openToday + '개' : '오늘 할 일은 다 끝났어요') +
+    (overdueItems.length ? ' · 밀린 ' + overdueItems.length + '개' : '') + '</p>';
+
+  /* 날짜 이동 */
+  html += '<div class="datebar">' +
+    '<button class="arrow" data-act="prevday" aria-label="이전 날">' + ICON.chev.replace('M9 5l7 7-7 7', 'M15 5l-7 7 7 7') + '</button>' +
+    '<div class="center">' +
+      '<span class="d-label">' + longLabel(base) + '</span>' +
+      '<span class="d-badge ' + (isToday ? '' : 'preview') + '">' + (isToday ? '오늘' : '미리 보기') + '</span>' +
+      '<input type="date" id="datePick" class="date-input" value="' + base + '" aria-label="기준 날짜 선택">' +
+    '</div>' +
+    '<button class="arrow" data-act="nextday" aria-label="다음 날">' + ICON.chev + '</button>' +
+  '</div>' +
+  (isToday ? '' : '<button class="backtoday" data-act="today">오늘로 돌아가기</button>');
+
+  /* 훈련 요약 */
+  var upcoming = trainings.filter(function(tr){ return tr.end >= base; });
+  if (!trainings.length){
+    html += '<div class="section"><div class="card"><div class="empty">' +
+      '<div class="em-title">등록된 훈련이 없어요</div>' +
+      '<div class="em-sub">훈련을 추가하면 지침서 순서대로<br>할 일이 자동으로 만들어져요.</div>' +
+      '<div style="margin-top:14px"><button class="btn primary" data-act="add-training">훈련 추가하기</button></div>' +
+      '</div></div></div>';
+  } else {
+    upcoming.slice(0, 3).forEach(function(tr){
+      html += heroHTML(tr, base);
+    });
+    if (!upcoming.length){
+      html += '<p class="empty-mini">예정된 훈련이 없어요. 지난 훈련은 ‘훈련 목록’에서 볼 수 있어요.</p>';
+    }
+  }
+
+  /* 오늘 할 일 */
+  html += '<div class="section">' +
+    '<div class="section-head"><span class="section-title">오늘 할 일</span><span class="section-count">' + todayItems.length + '</span></div>';
+  if (!todayItems.length){
+    html += '<div class="card"><div class="empty"><div class="em-title">오늘은 비어 있어요</div>' +
+      '<div class="em-sub">' + (soonItems.length ? '곧 할 일이 ' + soonItems.length + '개 있어요.' : '날짜를 넘겨서 미리 확인해 볼 수 있어요.') + '</div></div></div>';
+  } else {
+    html += '<div class="list">' + todayItems.map(function(r){ return taskRowHTML(r, base); }).join('') + '</div>';
+  }
+  html += '</div>';
+
+  /* 밀린 할 일 */
+  if (overdueItems.length){
+    html += '<div class="section">' +
+      '<div class="section-head"><span class="section-title">밀린 할 일</span><span class="section-count hot">' + overdueItems.length + '</span></div>' +
+      '<div class="list">' + overdueItems.map(function(r){ return taskRowHTML(r, base); }).join('') + '</div></div>';
+  }
+
+  /* 곧 할 일 */
+  if (soonItems.length){
+    html += '<div class="section">' +
+      '<div class="section-head"><span class="section-title">곧 할 일</span><span class="section-count">7일 이내</span></div>' +
+      '<div class="list">' + soonItems.slice(0, 8).map(function(r){ return taskRowHTML(r, base); }).join('') + '</div></div>';
+  }
+
+  /* 상시 업무 (오늘 해당분) */
+  var dueRec = [];
+  RECURRING_DEFS.forEach(function(def){
+    var occ = recurringOccurrences(def, base);
+    occ.items.forEach(function(it){
+      if (def.period === 'daily' || def.period === 'weekly'){
+        dueRec.push({ def: def, occ: it, done: !!state.recurringDone[it.key], late: it.date < base && !state.recurringDone[it.key] });
+      }
+    });
+  });
+  if (dueRec.length){
+    html += '<div class="section">' +
+      '<div class="section-head"><span class="section-title">상시 업무</span><span class="section-count">' + dueRec.length + '</span></div>' +
+      '<div class="list">' + dueRec.map(function(r){
+        var open = !!ui.expanded['r:' + r.def.id];
+        return '<div class="task ' + (r.done ? 'done' : '') + ' ' + (open ? 'open' : '') + '">' +
+          '<button class="check ' + (r.done ? 'on' : '') + '" data-act="toggle-rec" data-key="' + r.occ.key + '" aria-label="완료">' + ICON.check + '</button>' +
+          '<div class="task-main" data-act="expand" data-x="r:' + r.def.id + '">' +
+            '<div class="task-title">' + esc(r.def.title) + '</div>' +
+            '<div class="task-meta"><span' + (r.late ? ' class="late"' : '') + '>' + esc(r.def.sched) +
+              (r.def.period === 'weekly' ? ' · ' + mdwLabel(r.occ.date) : '') + (r.late ? ' · 이번 주 미완료' : '') + '</span></div>' +
+          '</div>' +
+          '<span class="chev">' + ICON.chev + '</span>' +
+        '</div>' +
+        (open ? detailHTML({ path: r.def.path, steps: r.def.steps, note: r.def.note, pulled: false }) : '');
+      }).join('') + '</div></div>';
+  }
+
+  html += '<p class="tiny" style="margin:22px 4px 6px;line-height:1.6">지침서 순서대로 자동 생성된 목록이에요. 항목을 누르면 업무 위치와 순서가 펼쳐져요.</p>';
+  return html;
+}
+
+function heroHTML(tr, base){
+  var p = progressOf(tr);
+  var st = trainingState(tr, base);
+  var cls = st.code === 'after' ? 'after' : st.code === 'during' ? 'during' : '';
+  return '<div class="hero" data-act="go-training" data-id="' + tr.id + '" role="button" tabindex="0">' +
+    '<div class="hero-top">' +
+      '<span class="chip">' + esc(tr.type) + '</span>' +
+      '<span class="hero-dday small ' + cls + '">' + st.label + '</span>' +
+    '</div>' +
+    '<div class="hero-name">' + esc(tr.name) + '</div>' +
+    '<div class="hero-dates">' + mdwLabel(tr.start) + ' ~ ' + mdwLabel(tr.end) + ' · 편성 ' + mdLabel(tr.setupDate) + '</div>' +
+    '<div class="hero-bottom"><div class="progress"><i style="width:' + p.pct + '%"></i></div>' +
+      '<span class="hero-prog">' + p.done + '/' + p.total + ' 완료</span></div>' +
+  '</div>';
+}
+
+function detailHTML(t){
+  var out = '<div class="detail">';
+  if (t.path) out += '<div class="path"><b>업무 위치</b><span>' + esc(t.path) + '</span></div>';
+  if (t.steps && t.steps.length){
+    out += '<ul class="steps">' + t.steps.map(function(s){ return '<li>' + esc(s) + '</li>'; }).join('') + '</ul>';
+  }
+  if (t.note) out += '<p class="note">' + esc(t.note) + '</p>';
+  if (t.pulled) out += '<p class="note">주말·공휴일이라 직전 평일로 당겨 표시했어요.</p>';
+  out += '</div>';
+  return out;
+}
+
+function taskRowHTML(r, base){
+  var t = r.task, tr = r.tr, done = r.done;
+  var x = 't:' + t.key;
+  var open = !!ui.expanded[x];
+  var st = r.st;
+  var meta = '';
+  if (st === 'today'){
+    meta = '<span>' + esc(tr.name) + '</span><span class="sep">·</span>' +
+      '<span>' + (t.isRange ? mdwLabel(t.date) + '~' + mdwLabel(t.due) + ' 기간' : '마감 ' + mdwLabel(t.due)) + '</span><span class="sep">·</span>' +
+      '<span class="soon">' + relLabel(tr, t.due) + '</span>';
+  } else if (st === 'overdue'){
+    meta = '<span>' + esc(tr.name) + '</span><span class="sep">·</span>' +
+      '<span class="late">' + mdwLabel(t.due) + ' 마감 · ' + diffDays(t.due, base) + '일 지남</span>';
+  } else {
+    var d = diffDays(base, t.date);
+    meta = '<span>' + esc(tr.name) + '</span><span class="sep">·</span>' +
+      '<span>' + mdwLabel(t.date) + (d === 1 ? ' · 내일' : ' · ' + d + '일 뒤') + '</span>';
+  }
+  return '<div class="task ' + (done ? 'done' : '') + ' ' + (open ? 'open' : '') + '">' +
+    '<button class="check ' + (done ? 'on' : '') + '" data-act="toggle-task" data-key="' + t.key + '" aria-label="완료">' + ICON.check + '</button>' +
+    '<div class="task-main" data-act="expand" data-x="' + x + '">' +
+      '<div class="task-title">' + esc(t.title) + '</div>' +
+      '<div class="task-meta">' + meta + '</div>' +
+    '</div>' +
+    '<span class="chev">' + ICON.chev + '</span>' +
+  '</div>' + (open ? detailHTML(t) : '');
+}
+
+/* ---------- 훈련 목록 ---------- */
+function renderTrainings(){
+  var base = ui.baseDate;
+  var list = sortedTrainings();
+  var html = '<h1 class="h1">훈련 목록</h1>' +
+    '<p class="h1-sub">' + list.length + '건 · 훈련을 추가하면 지침서 순서대로 할 일이 생성돼요</p>' +
+    '<div style="display:flex;gap:8px;margin:0 0 6px">' +
+      '<button class="btn primary" style="flex:1" data-act="add-training">' + ICON.plus + ' 훈련 추가</button>' +
+    '</div>';
+
+  if (!list.length){
+    html += '<div class="section"><div class="card"><div class="empty">' +
+      '<div class="em-title">아직 훈련이 없어요</div>' +
+      '<div class="em-sub">훈련명·유형·기간·편성일만 넣으면<br>D-15부터 종료 다음날까지 자동으로 만들어져요.</div>' +
+      '</div></div></div>';
+    return html;
+  }
+
+  list.forEach(function(tr){
+    var p = progressOf(tr);
+    var st = trainingState(tr, base);
+    var cls = st.code === 'after' ? 'after' : st.code === 'during' ? 'during' : '';
+    var open = !!ui.expanded['tr:' + tr.id];
+    html += '<div class="tcard">' +
+      '<div class="tcard-top">' +
+        '<div class="tcard-main">' +
+          '<span class="chip ' + (isJakgye(tr.type) ? '' : 'gray') + '">' + esc(tr.type) + '</span>' +
+          (tr.nationwide ? ' <span class="chip warn">전국단위 포함</span>' : '') +
+          '<div class="tcard-name">' + esc(tr.name || '이름 없는 훈련') + '</div>' +
+          '<div class="tcard-dates">' + mdwLabel(tr.start) + ' ~ ' + mdwLabel(tr.end) + '</div>' +
+          '<div class="tcard-sub">편성일 ' + mdwLabel(tr.setupDate) + (tr.pullWeekend === false ? ' · 주말 당김 끔' : ' · 주말·공휴일은 직전 평일') + '</div>' +
+        '</div>' +
+        '<div class="dday-box ' + cls + '"><div class="n">' + (st.code === 'after' ? '완료' : st.label) + '</div>' +
+          '<div class="t">' + (st.code === 'before' ? 'D-DAY까지' : st.code === 'during' ? '훈련 중' : '종료') + '</div></div>' +
+      '</div>' +
+      '<div class="tcard-bar"><div class="progress"><i style="width:' + p.pct + '%"></i></div>' +
+        '<span class="tiny">' + p.done + '/' + p.total + '</span></div>' +
+      '<div class="tcard-actions">' +
+        '<button class="btn small" data-act="expand-training" data-id="' + tr.id + '">' + (open ? '할 일 접기' : '할 일 보기') + '</button>' +
+        '<button class="btn small" data-act="edit-training" data-id="' + tr.id + '">수정</button>' +
+        '<button class="btn small danger" data-act="del-training" data-id="' + tr.id + '">삭제</button>' +
+      '</div>' +
+      (tr.memo ? '<p class="help" style="margin-top:10px">' + esc(tr.memo) + '</p>' : '') +
+      (open ? trainingBodyHTML(tr, base) : '') +
+    '</div>';
+  });
+  return html;
+}
+
+function trainingBodyHTML(tr, base){
+  var tasks = buildTasks(tr, state);
+  var out = '<div class="tcard-body">';
+  for (var ph = 0; ph < PHASES.length; ph++){
+    var group = tasks.filter(function(t){ return t.phase === ph; });
+    if (!group.length) continue;
+    var doneCount = group.filter(function(t){ return !!state.done[t.key]; }).length;
+    out += '<div class="phase-head"><span>' + PHASES[ph] + '</span><span class="ph-count">' + doneCount + '/' + group.length + '</span></div>';
+    out += group.map(function(t){
+      var done = !!state.done[t.key];
+      var st = taskStatus(t, base);
+      var dateStr = t.isRange ? mdwLabel(t.date) + ' ~ ' + mdwLabel(t.due) : mdwLabel(t.date);
+      var rel = relLabel(tr, t.date);
+      var late = st === 'overdue' && !done;
+      return '<div class="tinytask ' + (done ? 'done' : '') + '">' +
+        '<button class="check ' + (done ? 'on' : '') + '" data-act="toggle-task" data-key="' + t.key + '">' + ICON.check + '</button>' +
+        '<div class="ti-main">' +
+          '<div class="ti-title">' + esc(t.title) + '</div>' +
+          '<div class="ti-date ' + (late ? 'late' : '') + '">' + dateStr + ' · ' + rel + (late ? ' · 밀림' : '') +
+            (t.pulled ? ' · 당김' : '') + '</div>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+  }
+  out += '</div>';
+  return out;
+}
+
+/* ---------- 상시 · 정기 업무 ---------- */
+function renderRecurring(){
+  var base = ui.baseDate;
+  var html = '<h1 class="h1">상시 · 정기 업무</h1>' +
+    '<p class="h1-sub">매일 · 매주 · 매월 반복되는 지침서 루틴</p>';
+
+  RECURRING_DEFS.forEach(function(def){
+    var occ = recurringOccurrences(def, base);
+    var open = !!ui.expanded['rc:' + def.id];
+    var last = lastDoneDate(state.recurringDone, def.id);
+    html += '<div class="rcard">' +
+      '<div class="rcard-head">' +
+        '<div style="flex:1;min-width:0">' +
+          '<div class="rcard-title">' + esc(def.title) + '</div>' +
+          '<div class="rcard-sched">' + esc(def.sched) + '</div>' +
+        '</div>' +
+        '<button class="mini-btn" data-act="expand-rec" data-id="' + def.id + '">' + (open ? '접기' : '자세히') + '</button>' +
+      '</div>';
+
+    if (occ.items.length){
+      html += '<div class="rcard-occ">' + occ.items.map(function(it){
+        var done = !!state.recurringDone[it.key];
+        var late = !done && it.date < base;
+        return '<button class="occ ' + (done ? 'on' : '') + (late ? ' late' : '') + '" data-act="toggle-rec" data-key="' + it.key + '">' +
+          '<span class="check ' + (done ? 'on' : '') + '">' + ICON.check + '</span>' + esc(it.label) +
+        '</button>';
+      }).join('') + '</div>';
+    } else {
+      html += '<div class="rcard-next">' + esc(occ.nextLabel || '지금은 해당 기간이 아니에요') + '</div>';
+    }
+
+    html += '<div class="rcard-next">' + (last ? '최근 완료 ' + mdLabel(last) : '아직 완료 기록이 없어요') + '</div>';
+
+    if (open){
+      html += '<div class="rcard-detail">' + detailHTML({ path: def.path, steps: def.steps, note: def.note, pulled: false }) + '</div>';
+    }
+    html += '</div>';
+  });
+
+  html += '<p class="tiny" style="margin:16px 4px 6px;line-height:1.6">체크는 회차별로 따로 저장돼요. 매일 항목은 날짜마다, 주간은 주마다 새로 체크할 수 있어요.</p>';
+  return html;
+}
+
+/* ---------- 지침 검색 ---------- */
+function renderGuide(){
+  var q = ui.q || '';
+  return '<h1 class="h1">지침 검색</h1>' +
+    '<p class="h1-sub">지침서 19개 항목 · ' + GUIDE_KB.length + '개 규칙에서 바로 찾아요</p>' +
+    '<div class="qa-box">' + ICON.search +
+      '<input id="qaInput" class="qa-input" type="text" inputmode="search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="예: 고발 면제, 우편통지, 질병 연기" value="' + esc(q) + '">' +
+      '<button id="qaClear" class="qa-clear" data-act="qa-clear" style="visibility:' + (q ? 'visible' : 'hidden') + '">지우기</button>' +
+    '</div>' +
+    '<div class="qa-chips">' + GUIDE_CHIPS.map(function(c){
+      return '<button class="qa-chip' + (q === c ? ' on' : '') + '" data-act="qa-chip" data-q="' + esc(c) + '">' + esc(c) + '</button>';
+    }).join('') + '</div>' +
+    '<div id="qaResults">' + renderQAResults(q) + '</div>' +
+    '<p class="tiny" style="margin:20px 4px 6px;line-height:1.6">지침서 원문 1~19항을 ' + GUIDE_KB.length + '개 규칙으로 나눠 담았어요. 답은 지침서 문장을 그대로 옮긴 것이라, 실제 처리 전에 원문·최신 공지를 한 번 더 확인하세요.</p>';
+}
+
+function renderQAResults(q){
+  var query = String(q || '').trim();
+  if (!query){
+    return '<p class="qa-hint">궁금한 걸 그대로 적어보세요. 지침서 문장에서 찾아 드려요.</p>' + guideIndexHTML();
+  }
+  var res = searchGuide(query);
+  if (!res.length){
+    return '<div class="card" style="margin-top:12px"><div class="empty">' +
+      '<div class="em-title">딱 맞는 항목을 못 찾았어요</div>' +
+      '<div class="em-sub">"고발", "우편", "연기"처럼 짧게 다시 찾아보거나<br>아래 목차에서 골라보세요.</div></div></div>' + guideIndexHTML();
+  }
+  var html = '<div class="qa-count">' + res.length + '개 항목 찾음</div>';
+  html += res.slice(0, 6).map(qaCardHTML).join('');
+  if (res.length > 6) html += '<p class="qa-hint">검색어를 더 좁히면 원하는 항목이 위로 올라와요.</p>';
+  return html;
+}
+
+function qaCardHTML(e){
+  var h = '<div class="qa-card">' +
+    '<div class="qa-group">' + esc(e.group) + '</div>' +
+    '<div class="qa-title">' + esc(e.title) + '</div>';
+  if (e.lines && e.lines.length){
+    h += '<ul class="qa-lines">' + e.lines.map(function(l){ return '<li>' + esc(l) + '</li>'; }).join('') + '</ul>';
+  }
+  if (e.path) h += '<div class="qa-path"><b>업무 위치</b><span>' + esc(e.path) + '</span></div>';
+  if (e.ex && e.ex.length){
+    h += '<div class="qa-ex"><b>예시</b><ul>' + e.ex.map(function(x){ return '<li>' + esc(x) + '</li>'; }).join('') + '</ul></div>';
+  }
+  return h + '</div>';
+}
+
+function guideIndexHTML(){
+  var groups = guideGroups();
+  return '<div class="section" style="margin-top:18px">' +
+    '<div class="section-head"><span class="section-title">지침서 목차</span><span class="section-count">' + GUIDE_KB.length + '개</span></div>' +
+    '<div class="card" style="padding:2px 16px">' + groups.map(function(g){
+      return '<button class="qa-index-row" data-act="qa-chip" data-q="' + esc(g.name) + '">' +
+        '<span>' + esc(g.name) + '</span><span class="cnt">' + g.count + ' ›</span></button>';
+    }).join('') + '</div></div>';
+}
+
+/* ===================== 시트 ===================== */
+function openSheet(kind, arg){
+  ui.sheet = { kind: kind, arg: arg || null };
+  renderSheet();
+  requestAnimationFrame(function(){
+    document.getElementById('sheetLayer').classList.add('on');
+  });
+}
+function closeSheet(){
+  var layer = document.getElementById('sheetLayer');
+  layer.classList.remove('on');
+  ui.sheet = null;
+  setTimeout(function(){ if (!ui.sheet) layer.innerHTML = ''; }, 260);
+}
+function renderSheet(){
+  var layer = document.getElementById('sheetLayer');
+  if (!ui.sheet){ layer.innerHTML = ''; return; }
+  var k = ui.sheet.kind;
+  var body = '', foot = '', title = '';
+  if (k === 'settings'){
+    title = '설정';
+    body = settingsBody();
+  } else if (k === 'form'){
+    var tr = ui.sheet.arg;
+    title = tr ? '훈련 수정' : '훈련 추가';
+    body = formBody(tr);
+    foot = '<button class="btn" data-act="close-sheet">취소</button>' +
+           '<button class="btn primary" data-act="save-training">' + (tr ? '저장' : '추가하기') + '</button>';
+  } else if (k === 'confirm'){
+    var c = ui.sheet.arg;
+    title = c.title;
+    body = '<div class="card pad"><p style="font-size:14px;line-height:1.55;color:var(--text2)">' + c.desc + '</p></div>';
+    foot = '<button class="btn" data-act="close-sheet">취소</button>' +
+           '<button class="btn danger" data-act="confirm-yes">' + c.yes + '</button>';
+  }
+  layer.innerHTML = '<div class="backdrop" data-act="close-sheet"></div>' +
+    '<div class="sheet" role="dialog" aria-modal="true">' +
+      '<div class="sheet-grab"></div>' +
+      '<div class="sheet-head"><h2>' + esc(title) + '</h2>' +
+        '<button class="mini-btn" data-act="close-sheet">닫기</button></div>' +
+      '<div class="sheet-body">' + body + '</div>' +
+      (foot ? '<div class="sheet-foot">' + foot + '</div>' : '') +
+    '</div>';
+}
+
+function settingsBody(){
+  var json = JSON.stringify(state, null, 2);
+  return '<div class="group-title">기본</div>' +
+    '<div class="field"><label>부대 이름</label>' +
+      '<input class="input" id="f-unit" value="' + esc(state.unit || '') + '" placeholder="예: 우리 동대">' +
+      '<p class="help">상단에 표시되는 이름이에요.</p></div>' +
+    '<button class="btn block" data-act="save-unit" style="margin-bottom:6px">부대 이름 저장</button>' +
+
+    '<div class="group-title">데이터 백업</div>' +
+    '<div class="listcard">' +
+      '<div class="listrow"><div><div class="lr-title">JSON으로 내보내기</div><div class="lr-sub">파일로 저장하거나 복사해서 보관</div></div>' +
+        '<button class="mini-btn" data-act="export-file">파일 저장</button></div>' +
+      '<div class="listrow"><div><div class="lr-title">클립보드로 복사</div><div class="lr-sub">메모 앱 등에 붙여넣기</div></div>' +
+        '<button class="mini-btn" data-act="export-copy">복사</button></div>' +
+      '<div class="listrow"><div><div class="lr-title">JSON 불러오기</div><div class="lr-sub">내보낸 파일 또는 붙여넣기</div></div>' +
+        '<button class="mini-btn" data-act="import-file">파일 선택</button></div>' +
+    '</div>' +
+    '<input type="file" id="importFile" accept="application/json,.json,text/plain" class="hidden">' +
+    '<div class="field" style="margin-top:12px"><label>붙여넣기로 불러오기</label>' +
+      '<textarea class="input" id="importText" placeholder="여기에 JSON을 붙여넣고 아래 버튼을 누르세요"></textarea></div>' +
+    '<button class="btn block" data-act="import-paste">붙여넣은 JSON 불러오기</button>' +
+    '<p class="help">불러오면 지금 데이터가 백업 내용으로 바뀌어요.</p>' +
+
+    '<div class="group-title">현재 JSON 보기</div>' +
+    '<details><summary style="font-size:12.5px;color:var(--accent);font-weight:700;margin:0 3px 8px">펼쳐서 확인 · 복사하기</summary>' +
+      '<textarea class="input" id="jsonDump" readonly style="font-size:11.5px;min-height:150px;font-family:ui-monospace,Menlo,monospace;color:var(--text2)">' + esc(json) + '</textarea>' +
+      '<button class="btn block" data-act="copy-dump" style="margin-top:8px">이 JSON 복사</button>' +
+    '</details>' +
+
+    '<div class="group-title">공휴일</div>' +
+    '<p class="help" style="margin:0 3px 9px">2026~2027년 공휴일이 기본으로 들어 있어요. 임시공휴일은 직접 추가할 수 있어요.</p>' +
+    '<div class="holi-add"><input type="date" class="input" id="holiDate"><button class="btn" data-act="add-holiday">추가</button></div>' +
+    (state.holidays && state.holidays.length
+      ? '<div class="listcard" style="margin-top:10px">' + state.holidays.map(function(h){
+          return '<div class="listrow"><div><div class="lr-title">' + mdwLabel(h.date) + '</div>' +
+            '<div class="lr-sub">' + esc(h.name || '공휴일') + '</div></div>' +
+            '<button class="mini-btn danger" data-act="del-holiday" data-date="' + h.date + '">삭제</button></div>';
+        }).join('') + '</div>'
+      : '') +
+
+    '<div class="group-title">초기화</div>' +
+    '<div class="listcard">' +
+      '<div class="listrow"><div><div class="lr-title">예시 훈련 다시 넣기</div><div class="lr-sub">12월 기본훈련 샘플 재생성</div></div>' +
+        '<button class="mini-btn" data-act="restore-sample">추가</button></div>' +
+      '<div class="listrow"><div><div class="lr-title" style="color:var(--danger)">모든 데이터 삭제</div><div class="lr-sub">훈련·완료 기록·설정 전부</div></div>' +
+        '<button class="mini-btn danger" data-act="reset-all">전체 초기화</button></div>' +
+    '</div>' +
+
+    '<div class="group-title">홈 화면에 추가</div>' +
+    '<div class="card pad"><p style="font-size:12.5px;line-height:1.6;color:var(--text2)">' +
+      '사파리에서 이 파일을 연 뒤 <b>공유</b> 버튼을 누르고 <b>홈 화면에 추가</b>를 선택하면 앱처럼 전체 화면으로 열려요. ' +
+      '데이터는 이 기기(브라우저)에만 저장되고 밖으로 나가지 않아요.</p></div>' +
+    '<p class="tiny" style="margin:18px 4px 6px;line-height:1.6">상근예비역 지침서 기반 · 오프라인 단일 파일</p>';
+}
+
+function formBody(tr){
+  var isEdit = !!tr;
+  var t = tr || { name:'', type:'기본훈련', start:'', end:'', setupDate: todayStr(), pullWeekend:true, nationwide:false, memo:'' };
+  return '<div class="field"><label>훈련명</label>' +
+      '<input class="input" id="f-name" value="' + esc(t.name) + '" placeholder="예: 12월 기본훈련"></div>' +
+
+    '<div class="field"><label>훈련 유형</label>' +
+      '<select class="input" id="f-type">' + TYPES.map(function(ty){
+        return '<option value="' + ty + '"' + (t.type === ty ? ' selected' : '') + '>' + ty + '</option>';
+      }).join('') + '</select>' +
+      '<p class="help">작계를 고르면 D-1에 작계 준비 항목이 자동으로 붙어요.</p></div>' +
+
+    '<div class="row2">' +
+      '<div class="field"><label>시작일 (D-DAY)</label>' +
+        '<input class="input" type="date" id="f-start" value="' + esc(t.start) + '"></div>' +
+      '<div class="field"><label>종료일</label>' +
+        '<input class="input" type="date" id="f-end" value="' + esc(t.end) + '"></div>' +
+    '</div>' +
+
+    '<div class="field"><label>편성일</label>' +
+      '<input class="input" type="date" id="f-setup" value="' + esc(t.setupDate || todayStr()) + '">' +
+      '<div style="display:flex;gap:8px;margin-top:8px">' +
+        '<button class="btn small" data-act="setup-today">오늘로</button>' +
+        '<button class="btn small" data-act="setup-start">시작일과 같게</button>' +
+      '</div>' +
+      '<p class="help">전자고지·알림톡을 보내는 날이에요. 편성일 +5일에 발송결과 확인·우편통지가 잡혀요.</p></div>' +
+
+    '<div class="switch-row">' +
+      '<div class="sw-text"><div class="sw-title">주말·공휴일은 직전 평일로</div>' +
+        '<div class="sw-sub">토·일·공휴일이면 앞 평일로 당겨서 표시해요</div></div>' +
+      '<button class="switch ' + (t.pullWeekend !== false ? 'on' : '') + '" id="f-pull" data-act="toggle-switch" aria-label="주말 당김"></button>' +
+    '</div>' +
+
+    '<div class="switch-row">' +
+      '<div class="sw-text"><div class="sw-title">전국단위 훈련 포함</div>' +
+        '<div class="sw-sub">D-1에 홍보메시지 발송 · 3차 통화가 추가돼요</div></div>' +
+      '<button class="switch ' + (t.nationwide ? 'on' : '') + '" id="f-nationwide" data-act="toggle-switch" aria-label="전국단위"></button>' +
+    '</div>' +
+
+    '<div class="field"><label>메모 (선택)</label>' +
+      '<textarea class="input" id="f-memo" placeholder="예: 지원 인원 포함, 버스 2대" style="min-height:70px">' + esc(t.memo || '') + '</textarea></div>' +
+
+    '<p class="help">저장하면 지침서 순서대로 할 일이 자동 생성돼요. 날짜를 고치면 할 일 날짜도 함께 바뀌고, 완료 체크는 그대로 유지돼요.</p>';
+}
+
+/* ===================== 동작 ===================== */
+document.addEventListener('click', function(e){
+  var el = e.target.closest('[data-act]');
+  if (!el) return;
+  var act = el.getAttribute('data-act');
+
+  switch (act){
+    case 'tab':
+      ui.tab = el.getAttribute('data-tab');
+      ui.expanded = {};
+      render(true);
+      break;
+
+    case 'prevday': ui.baseDate = addDays(ui.baseDate, -1); render(); break;
+    case 'nextday': ui.baseDate = addDays(ui.baseDate, 1); render(); break;
+
+    case 'today':
+      ui.baseDate = todayStr();
+      render();
+      break;
+
+    case 'toggle-task': {
+      var key = el.getAttribute('data-key');
+      if (state.done[key]) delete state.done[key];
+      else state.done[key] = true;
+      saveState();
+      render();
+      break;
+    }
+
+    case 'toggle-rec': {
+      var rk = el.getAttribute('data-key');
+      if (state.recurringDone[rk]) delete state.recurringDone[rk];
+      else state.recurringDone[rk] = true;
+      saveState();
+      render();
+      break;
+    }
+
+    case 'expand': {
+      var x = el.getAttribute('data-x');
+      if (ui.expanded[x]) delete ui.expanded[x];
+      else ui.expanded[x] = true;
+      render();
+      break;
+    }
+
+    case 'expand-training': {
+      var tid = el.getAttribute('data-id');
+      var k = 'tr:' + tid;
+      if (ui.expanded[k]) delete ui.expanded[k];
+      else ui.expanded[k] = true;
+      render();
+      break;
+    }
+
+    case 'go-training': {
+      var gt = el.getAttribute('data-id');
+      ui.tab = 'trainings';
+      ui.expanded = {};
+      ui.expanded['tr:' + gt] = true;
+      render(true);
+      break;
+    }
+
+    case 'expand-rec': {
+      var rid = el.getAttribute('data-id');
+      var k2 = 'rc:' + rid;
+      if (ui.expanded[k2]) delete ui.expanded[k2];
+      else ui.expanded[k2] = true;
+      render();
+      break;
+    }
+
+    case 'add-training': openSheet('form', null); break;
+    case 'edit-training': {
+      var id = el.getAttribute('data-id');
+      var tr = state.trainings.filter(function(t){ return t.id === id; })[0];
+      if (tr) openSheet('form', tr);
+      break;
+    }
+    case 'del-training': {
+      var id2 = el.getAttribute('data-id');
+      var target = state.trainings.filter(function(t){ return t.id === id2; })[0];
+      if (!target) break;
+      openSheet('confirm', {
+        title: '훈련을 삭제할까요?',
+        desc: '<b>' + esc(target.name) + '</b> 훈련과 자동 생성된 할 일이 함께 사라져요. 완료 체크 기록도 지워져요.',
+        yes: '삭제',
+        action: 'delete-training',
+        id: id2
+      });
+      break;
+    }
+
+    case 'confirm-yes': {
+      var c = ui.sheet && ui.sheet.arg;
+      if (!c) break;
+      if (c.action === 'delete-training'){
+        state.trainings = state.trainings.filter(function(t){ return t.id !== c.id; });
+        saveState();
+        closeSheet();
+        render();
+        toast('훈련을 삭제했어요');
+      } else if (c.action === 'reset-all'){
+        state = defaultState();
+        saveState();
+        closeSheet();
+        render(true);
+        toast('모든 데이터를 지웠어요');
+      }
+      break;
+    }
+
+    case 'save-training': saveTraining(el); break;
+
+    case 'setup-today': {
+      var fs = document.getElementById('f-setup');
+      if (fs) fs.value = todayStr();
+      break;
+    }
+    case 'setup-start': {
+      var st2 = document.getElementById('f-start');
+      var fs2 = document.getElementById('f-setup');
+      if (st2 && fs2 && st2.value) fs2.value = st2.value;
+      break;
+    }
+    case 'toggle-switch':
+      el.classList.toggle('on');
+      break;
+
+    case 'qa-chip':
+      ui.q = el.getAttribute('data-q') || '';
+      render(true);
+      break;
+    case 'qa-clear':
+      ui.q = '';
+      render(true);
+      break;
+
+    case 'open-settings': openSheet('settings'); break;
+    case 'close-sheet': closeSheet(); break;
+
+    case 'save-unit': {
+      var u = document.getElementById('f-unit');
+      state.unit = (u && u.value.trim()) || '우리 동대';
+      saveState();
+      render();
+      toast('저장했어요');
+      break;
+    }
+
+    case 'import-file': {
+      var fi = document.getElementById('importFile');
+      if (fi) fi.click();
+      break;
+    }
+
+    case 'export-file': {
+      try{
+        var data = JSON.stringify(state, null, 2);
+        var blob = new Blob([data], { type: 'application/json' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'reserve-todo-' + todayStr() + '.json';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(function(){ URL.revokeObjectURL(url); }, 1500);
+        toast('파일로 내보냈어요');
+      } catch(err){ toast('내보내기에 실패했어요. JSON을 복사해 주세요'); }
+      break;
+    }
+    case 'export-copy': copyText(JSON.stringify(state, null, 2), 'JSON을 복사했어요'); break;
+    case 'copy-dump': {
+      var ta = document.getElementById('jsonDump');
+      copyText(ta ? ta.value : JSON.stringify(state, null, 2), 'JSON을 복사했어요');
+      break;
+    }
+
+    case 'import-paste': {
+      var ta2 = document.getElementById('importText');
+      if (!ta2 || !ta2.value.trim()){ toast('붙여넣은 내용이 없어요'); break; }
+      importJSON(ta2.value);
+      break;
+    }
+
+    case 'add-holiday': {
+      var hd = document.getElementById('holiDate');
+      if (!hd || !hd.value){ toast('날짜를 골라 주세요'); break; }
+      if (isHoliday(state, hd.value)){ toast('이미 공휴일로 들어 있어요'); break; }
+      state.holidays.push({ date: hd.value, name: '임시공휴일' });
+      state.holidays.sort(function(a, b){ return a.date < b.date ? -1 : 1; });
+      saveState();
+      renderSheet();
+      render();
+      toast(mdwLabel(hd.value) + '을 공휴일로 추가했어요');
+      break;
+    }
+    case 'del-holiday': {
+      var dd = el.getAttribute('data-date');
+      state.holidays = state.holidays.filter(function(h){ return h.date !== dd; });
+      saveState();
+      renderSheet();
+      render();
+      break;
+    }
+
+    case 'restore-sample': {
+      seedSample(state);
+      saveState();
+      closeSheet();
+      render(true);
+      toast('예시 훈련을 다시 넣었어요');
+      break;
+    }
+    case 'reset-all': {
+      openSheet('confirm', {
+        title: '모든 데이터를 지울까요?',
+        desc: '훈련·완료 기록·공휴일 설정이 모두 사라져요. 되돌릴 수 없으니 필요한 건 먼저 JSON으로 내보내 두세요.',
+        yes: '전체 삭제',
+        action: 'reset-all'
+      });
+      break;
+    }
+  }
+});
+
+document.addEventListener('input', function(e){
+  if (e.target && e.target.id === 'qaInput'){
+    ui.q = e.target.value;
+    var box = document.getElementById('qaResults');
+    if (box) box.innerHTML = renderQAResults(ui.q);
+    var cl = document.getElementById('qaClear');
+    if (cl) cl.style.visibility = ui.q ? 'visible' : 'hidden';
+  }
+});
+
+document.addEventListener('change', function(e){
+  var id = e.target && e.target.id;
+  if (id === 'datePick'){
+    if (e.target.value){ ui.baseDate = e.target.value; render(); }
+  } else if (id === 'importFile'){
+    var file = e.target.files && e.target.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function(ev){ importJSON(String(ev.target.result || '')); };
+    reader.onerror = function(){ toast('파일을 읽지 못했어요'); };
+    reader.readAsText(file);
+  }
+});
+
+function saveTraining(btn){
+  var name = (document.getElementById('f-name').value || '').trim();
+  var type = document.getElementById('f-type').value;
+  var start = document.getElementById('f-start').value;
+  var end = document.getElementById('f-end').value;
+  var setup = document.getElementById('f-setup').value;
+  var pull = document.getElementById('f-pull').classList.contains('on');
+  var nation = document.getElementById('f-nationwide').classList.contains('on');
+  var memo = (document.getElementById('f-memo').value || '').trim();
+
+  if (!start){ toast('시작일을 골라 주세요'); return; }
+  if (!end) end = start;
+  if (end < start) end = start;
+  if (!setup) setup = todayStr();
+  if (!name) name = type + ' 훈련';
+
+  var editing = ui.sheet && ui.sheet.arg;
+  if (editing){
+    editing.name = name; editing.type = type; editing.start = start; editing.end = end;
+    editing.setupDate = setup; editing.pullWeekend = pull; editing.nationwide = nation; editing.memo = memo;
+  } else {
+    var tr = makeTraining({ name: name, type: type, start: start, end: end, setupDate: setup,
+      pullWeekend: pull, nationwide: nation, memo: memo });
+    state.trainings.push(tr);
+  }
+  saveState();
+  closeSheet();
+  render(true);
+  toast(editing ? '훈련을 수정했어요' : '훈련을 추가했어요');
+}
+
+function importJSON(text){
+  var parsed;
+  try{ parsed = JSON.parse(text); }
+  catch(e){ toast('JSON 형식이 아니에요'); return; }
+  if (!parsed || !Array.isArray(parsed.trainings)){ toast('이 앱의 백업 파일이 아니에요'); return; }
+  var s = defaultState();
+  s.unit = parsed.unit || '우리 동대';
+  s.trainings = parsed.trainings;
+  s.done = parsed.done && typeof parsed.done === 'object' ? parsed.done : {};
+  s.recurringDone = parsed.recurringDone && typeof parsed.recurringDone === 'object' ? parsed.recurringDone : {};
+  s.holidays = Array.isArray(parsed.holidays) ? parsed.holidays : [];
+  s.seeded = true;
+  state = s;
+  saveState();
+  closeSheet();
+  render(true);
+  toast('백업을 불러왔어요 (' + state.trainings.length + '건)');
+}
+
+function copyText(text, okMsg){
+  if (navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(function(){ toast(okMsg); })
+      .catch(function(){ fallbackCopy(text, okMsg); });
+  } else {
+    fallbackCopy(text, okMsg);
+  }
+}
+function fallbackCopy(text, okMsg){
+  var ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed';
+  ta.style.opacity = '0';
+  document.body.appendChild(ta);
+  ta.select();
+  try{ document.execCommand('copy'); toast(okMsg); }
+  catch(e){ toast('복사에 실패했어요'); }
+  ta.remove();
+}
+
+/* 스크롤 시 내비 경계선 */
+window.addEventListener('scroll', function(){
+  var nav = document.getElementById('nav');
+  if (window.scrollY > 4) nav.classList.add('scrolled');
+  else nav.classList.remove('scrolled');
+}, { passive: true });
+
+/* 시작 */
+render(true);
+</script>
+</body>
+</html>
