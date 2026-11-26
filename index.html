@@ -340,12 +340,12 @@ b,i,em{font-style:normal}
 .tcard-dates{font-size:12.5px;color:var(--text2);font-weight:700;margin-top:3px;font-variant-numeric:tabular-nums}
 .tcard-sub{font-size:11px;color:var(--text3);font-weight:600;margin-top:3px}
 .dday-pill{
-  flex:0 0 auto;min-width:62px;text-align:center;padding:8px 9px 7px;border-radius:14px;
+  flex:0 0 auto;min-width:68px;text-align:center;padding:8px 10px 7px;border-radius:14px;
   background:linear-gradient(160deg,#1E3A8A,#0F172A);color:#fff;
   box-shadow:0 10px 20px -12px rgba(30,58,138,.9);
 }
 .dday-pill b{display:block;font-size:17px;font-weight:900;letter-spacing:-0.045em;font-variant-numeric:tabular-nums;line-height:1.15}
-.dday-pill i{display:block;font-size:8.5px;font-weight:800;color:rgba(255,255,255,.62);margin-top:2px;letter-spacing:.01em}
+.dday-pill i{display:block;font-size:8px;font-weight:800;color:rgba(255,255,255,.62);margin-top:2px;letter-spacing:.01em}
 .dday-pill.during{background:linear-gradient(160deg,#8A4B00,#2A1A00);box-shadow:0 10px 20px -12px rgba(138,75,0,.9)}
 .dday-pill.after{background:var(--card-2);color:var(--text3);box-shadow:none}
 .dday-pill.after i{color:var(--text3)}
@@ -486,7 +486,7 @@ b,i,em{font-style:normal}
 .field > label{display:block;font-size:11.5px;font-weight:800;color:var(--text2);margin:0 2px 6px;letter-spacing:-0.01em}
 .input{
   width:100%;height:48px;padding:0 14px;border-radius:14px;
-  background:var(--card);border:1px solid var(--line);font-size:16px;font-weight:700;
+  background:var(--card);border:1px solid var(--line);font-size:16px;font-weight:600;
   letter-spacing:-0.015em;outline:none;appearance:none;
   transition:border-color .16s ease, box-shadow .16s ease;
 }
@@ -1545,7 +1545,6 @@ function heroHTML(tr, base){
   var cls = st.code === 'after' ? 'after' : st.code === 'during' ? 'during' : '';
   var left = p.total - p.done;
   var big = st.code === 'after' ? '종료' : st.label;
-  var small = st.code === 'after' ? '지난 훈련' : (st.code === 'during' ? '훈련 중' : 'D-DAY까지');
   return '<button class="hero ' + cls + '" data-act="go-training" data-id="' + tr.id + '">' +
     '<div class="hero-head">' +
       '<span class="hero-tag">' + esc(tr.type) + (tr.nationwide ? ' · 전국단위' : '') + '</span>' +
@@ -1560,7 +1559,7 @@ function heroHTML(tr, base){
           '<span class="hchip dim">완료 ' + p.done + '/' + p.total + '</span>' +
         '</div>' +
       '</div>' +
-      ringHTML(p.pct, big, small, cls) +
+      ringHTML(p.pct, big, '', cls) +
     '</div>' +
     '<div class="hero-foot"><div class="hero-track"><i style="width:' + p.pct + '%"></i></div><span>' + p.pct + '%</span></div>' +
   '</button>';
@@ -1750,12 +1749,12 @@ function renderGuide(){
         '<input id="qaInput" class="qinput" type="text" inputmode="search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="예: 고발 면제, 우편통지, 질병 연기" value="' + esc(q) + '">' +
         '<button id="qaClear" class="qclear" data-act="qa-clear" style="visibility:' + (q ? 'visible' : 'hidden') + '">지우기</button>' +
       '</div>' +
-      '<div class="chips">' + GUIDE_CHIPS.map(function(c){
-        var on = q === c;
-        return '<button class="qchip' + (on ? ' on' : '') + '" data-act="qa-chip" data-q="' + esc(c) + '"' +
-          (on ? '' : ' style="' + chipVars(c) + '"') + '>' + esc(c) + '</button>';
-      }).join('') + '</div>' +
     '</div>' +
+    '<div class="chips">' + GUIDE_CHIPS.map(function(c){
+      var on = q === c;
+      return '<button class="qchip' + (on ? ' on' : '') + '" data-act="qa-chip" data-q="' + esc(c) + '"' +
+        (on ? '' : ' style="' + chipVars(c) + '"') + '>' + esc(c) + '</button>';
+    }).join('') + '</div>' +
     '<div id="qaResults">' + renderQAResults(q) + '</div>' +
     '<p class="qhint">지침서 원문 1~19항을 ' + GUIDE_KB.length + '개 규칙으로 나눠 담았어요. 답은 지침서 문장을 그대로 옮긴 것이라, 실제 처리 전에 원문·최신 공지를 한 번 더 확인하세요.</p>';
 }
